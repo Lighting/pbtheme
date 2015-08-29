@@ -14,7 +14,7 @@
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
 
-static const char *default_config = "theme.cfg"
+static const char *default_config = "theme.cfg";
 
 void terminate(const char *fmt, ...)
 {
@@ -30,10 +30,10 @@ void terminate(const char *fmt, ...)
 
 void usage(char **argv)
 {
-	fprintf(stderr, "Usage: %s [OPTION] <theme.pbt> [<theme.cfg>]\n",argv[0]);
+	fprintf(stderr, "Usage: %s [OPTION] <theme.pbt> [<%s>]\n", argv[0], default_config);
 	fprintf(stderr, "Pack/unpack config of PocketBook theme\n");
-	fprintf(stderr, "\t-p\tpack <theme.cfg> to <theme.pbt>\n");
-	fprintf(stderr, "\t-u\tunpack <theme.cfg> from <theme.pbt>\n");
+	fprintf(stderr, "\t-p\tpack <%s> to <theme.pbt>\n", default_config);
+	fprintf(stderr, "\t-u\tunpack <%s> from <theme.pbt>\n", default_config);
 	exit(1);
 }
 
