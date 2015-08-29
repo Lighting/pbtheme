@@ -2,8 +2,9 @@ language: c
 
 sudo: required
 
-compiler:
-    - make
+compiler: make
+
+install: make
 
 script:
     - pbtheme
