@@ -1,7 +1,9 @@
 [![Build Status][travis-badge]][travis-link]
 [![GitHub release][release-badge]][release-link]
 # pbtheme
-pbtheme - упаковщик/распаковщик конфигурационного файла (theme.cfg) темы PocketBook (.pbt)
+Упаковщик/распаковщик конфигурационного файла (theme.cfg) тем от PocketBook (.pbt)
+
+Поддерживается формат PocketBookTheme версии 1
 
 [travis-badge]:https://travis-ci.org/Lighting/pbtheme.svg?branch=master
 [travis-link]:https://travis-ci.org/Lighting/pbtheme
