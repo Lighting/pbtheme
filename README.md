@@ -1,7 +1,7 @@
 [![Build Status][travis-badge]][travis-link]
 [![GitHub release][release-badge]][release-link]
 # pbtheme
-Упаковщик/распаковщик конфигурационного файла (theme.cfg) тем от PocketBook (.pbt)
+Упаковщик/распаковщик конфигурационного файла (theme.cfg) темы для PocketBook (.pbt)
 
 Поддерживается формат PocketBookTheme версии 1
 
