@@ -9,4 +9,5 @@ install: make
 script:
     - ./pbtheme || true
     - ./pbtheme -u test-env/Line.pbt
-    - ./pbtheme -p test-env/Line.pbt theme.cfg
+    - cat theme.cfg
+    - ./pbtheme -p test-env/Line.pbt theme.cfg || true
