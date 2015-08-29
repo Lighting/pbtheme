@@ -1,7 +1,7 @@
 /*
  pbtheme - pack/unpack PocketBook theme config file
  Developed by Lit
- Based on sourcecode by Dmitry Zakharov https://github.com/yuryfdr/xpbres.git
+ Based on source code by Dmitry Zakharov https://github.com/yuryfdr/xpbres.git
 */
 
 #include <stdio.h>
