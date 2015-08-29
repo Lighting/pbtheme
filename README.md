@@ -1,2 +1,2 @@
 # pbtheme
-packer/unpacker theme.cfg of PocketBook theme (.pbt)
+pbtheme - упаковщик/распаковщик конфигурационного файла (theme.cfg) темы PocketBook (.pbt)
