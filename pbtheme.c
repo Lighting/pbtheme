@@ -79,13 +79,13 @@ void unpack(char *theme, char *config)
 	memset(buf, 0, 32);
 	fread(buf, 1, 32, tfd);
 	if(strncmp(buf, PBTSIGNATURE, strlen(PBTSIGNATURE)) != 0)
-		terminate("%s is not a PocketBook theme file");
-	if(*((char *) (buf+15)) == PBTVERSION)
-		terminate("%s have unsupported PocketBook theme version");
+		terminate("%s is not a PocketBook theme file", theme);
+	if(buf[15] == PBTVERSION)
+		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
 	
 	headersize = *((int *) (buf+16));
 	if(headersize > MAXSIZE)
-		terminate("%s have too big header of PocketBook theme");
+		terminate("%s have too big header of PocketBook theme", theme);
 	
 	header = malloc(headersize);
 	iheader = (unsigned int *) header;
