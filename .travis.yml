@@ -1,0 +1,10 @@
+language: c
+
+compiler:
+    - clang
+
+install:
+    - make
+    
+script:
+    - pbtheme
