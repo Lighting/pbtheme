@@ -30,8 +30,8 @@ void usage(char **argv)
 {
 	fprintf(stderr, "Usage: %s [OPTION] <theme.pbt> [<theme.cfg>]\n",argv[0]);
 	fprintf(stderr, "Pack/unpack config of PocketBook theme\n");
-	fprintf(stderr, "\t-p\tpack\n");
-	fprintf(stderr, "\t-u\tunpack\n");
+	fprintf(stderr, "\t-p\tpack <theme.cfg> to <theme.pbt>\n");
+	fprintf(stderr, "\t-u\tunpack <theme.cfg> from <theme.pbt>\n");
 	exit(1);
 }
 
