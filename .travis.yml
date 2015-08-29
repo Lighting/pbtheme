@@ -9,7 +9,7 @@ before_install:
     - sudo apt-get -qq install zlib1g-dev
 
 install:
-    - make pbtheme
+    - make
 
 script:
     - pbtheme
