@@ -6,7 +6,7 @@ compiler:
     - clang
 
 install:
-    - ls -l
+    - cd Lighting/pbtheme
     - make
 
 script:
