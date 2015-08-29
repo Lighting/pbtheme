@@ -80,7 +80,7 @@ void unpack(char *theme, char *config)
 	fread(buf, 1, 32, tfd);
 	if(strncmp(buf, PBTSIGNATURE, strlen(PBTSIGNATURE)) != 0)
 		terminate("%s is not a PocketBook theme file", theme);
-	if(buf[15] == PBTVERSION)
+	if(buf[15] != PBTVERSION)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
 	
 	headersize = *((int *) (buf+16));
