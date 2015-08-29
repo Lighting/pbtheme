@@ -46,10 +46,10 @@ void terminate(const char *fmt, ...) {
 
 void usage(char **argv) {
 
-	fprintf(stderr, "Usage: %s -c output.c resource [ ... ]\n",argv[0]);
-	fprintf(stderr, "       %s -t output.pbt config.txt resource [ ... ]\n",argv[0]);
-	fprintf(stderr, "       %s -u input.pbt resource\n",argv[0]);
-	fprintf(stderr, "       %s -l input.pbt\n",argv[0]);
+	fprintf(stderr, "Usage: %s [OPTION] <theme.pbt> [<theme.cfg>]\n",argv[0]);
+	fprintf(stderr, "Pack/unpack config of PocketBook theme\n",argv[0]);
+	fprintf(stderr, "\t-p\t\tpack\n",argv[0]);
+	fprintf(stderr, "\t-u\t\tunpack\n",argv[0]);
 	exit(1);
 
 }
