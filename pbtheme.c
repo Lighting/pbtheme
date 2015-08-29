@@ -14,6 +14,8 @@
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
 
+static const char *default_config "theme.cfg"
+
 void terminate(const char *fmt, ...)
 {
 	va_list ap;
@@ -35,7 +37,7 @@ void usage(char **argv)
 	exit(1);
 }
 
-void unpack_resource(FILE *fd, char *name, unsigned long len, int pos, unsigned long clen)
+void unpack_resource(FILE *fd, const char *name, unsigned long len, int pos, unsigned long clen)
 {
 	unsigned char *data, *cdata;
 	FILE *ofd;
@@ -59,12 +61,12 @@ void unpack_resource(FILE *fd, char *name, unsigned long len, int pos, unsigned 
 	free(data);
 }
 
-void pack(char *theme, char *config)
+void pack(char *theme, const char *config)
 {
 	terminate("This function not supported yet");
 }
 
-void unpack(char *theme, char *config)
+void unpack(char *theme, const char *config)
 {
 	char buf[32];
 	unsigned char *header;
@@ -100,9 +102,9 @@ int main(int argc, char **argv)
 		usage(argv);
 	
 	if(strcmp(argv[1], "-p") == 0)
-		pack(argv[2], (argc < 3) ? "theme.cfg" : argv[3]);
+		pack(argv[2], (argc < 4) ? default_config : argv[3]);
 	else if(strcmp(argv[1], "-u") == 0)
-		unpack(argv[2], (argc < 3) ? "theme.cfg" : argv[3]);
+		unpack(argv[2], (argc < 4) ? default_config : argv[3]);
 	else
 		usage(argv);
 }
