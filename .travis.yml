@@ -7,4 +7,5 @@ compiler: gcc
 install: make
 
 script:
+    - ./pbtheme || true
     - ./pbtheme test-env/Line.pbt
