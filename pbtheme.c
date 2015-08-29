@@ -11,7 +11,6 @@
 #include <zlib.h>
 
 #define MAXSIZE 520000
-#define MAXIMGLIST 4096
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
 
@@ -62,6 +61,7 @@ void unpack_resource(FILE *fd, char *name, unsigned long len, int pos, unsigned 
 
 void pack(char *theme, char *config)
 {
+	terminate("This function not supported yet");
 }
 
 void unpack(char *theme, char *config)
@@ -80,8 +80,13 @@ void unpack(char *theme, char *config)
 	fread(buf, 1, 32, tfd);
 	if(strncmp(buf, PBTSIGNATURE, strlen(PBTSIGNATURE)) != 0)
 		terminate("%s is not a PocketBook theme file");
+	if(*((char *) (buf+15)) == PBTVERSION)
+		terminate("%s have unsupported PocketBook theme version");
 	
 	headersize = *((int *) (buf+16));
+	if(headersize > MAXSIZE)
+		terminate("%s have too big header of PocketBook theme");
+	
 	header = malloc(headersize);
 	iheader = (int *) header;
 	fseek(tfd, 0, SEEK_SET);
