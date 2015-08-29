@@ -14,7 +14,7 @@
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
 
-static const char *default_config "theme.cfg"
+static const char *default_config = "theme.cfg"
 
 void terminate(const char *fmt, ...)
 {
