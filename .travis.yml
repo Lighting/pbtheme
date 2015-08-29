@@ -3,10 +3,7 @@ language: c
 sudo: required
 
 compiler:
-    - clang
-
-install:
-    - cat make
+    - make
 
 script:
     - pbtheme
