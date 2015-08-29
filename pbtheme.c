@@ -88,7 +88,7 @@ void unpack(char *theme, char *config)
 		terminate("%s have too big header of PocketBook theme");
 	
 	header = malloc(headersize);
-	iheader = (int *) header;
+	iheader = (unsigned int *) header;
 	fseek(tfd, 0, SEEK_SET);
 	fread(header, 1, headersize, tfd);
 	unpack_resource(tfd, config, iheader[5], iheader[6], iheader[7]);
