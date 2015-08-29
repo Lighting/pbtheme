@@ -2,7 +2,7 @@ language: c
 
 sudo: required
 
-compiler: cc
+compiler: gcc
 
 install: make
 
