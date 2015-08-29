@@ -5,6 +5,9 @@ sudo: required
 compiler:
     - clang
 
+before_install:
+    - sudo apt-get install zlib1g-dev
+
 install:
     - make pbtheme
 
