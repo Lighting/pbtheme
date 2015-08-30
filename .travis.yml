@@ -6,11 +6,22 @@ compiler: gcc
 
 install: make
 
+before_script:
+    - cp test-env/Line.pbt test-env/Line-old.pbt
+
 script:
     - ./pbtheme -h
-    - cp test-env/Line.pbt test-env/Line-old.pbt
+    
     - ./pbtheme test-env/Line.pbt > theme.cfg
     - test -s theme.cfg
+    
     - ./pbtheme -p test-env/Line.pbt theme.cfg
     - test -s test-env/Line.pbt
-    - cmp test-env/Line-old.pbt test-env/Line.pbt
+    - diff test-env/Line-old.pbt test-env/Line.pbt
+    
+    - echo test >> theme.cfg
+    - ./pbtheme -p test-env/Line.pbt theme.cfg
+    - test -s test-env/Line.pbt
+    - stat -c %s test-env/Line-old.pbt
+    - stat -c %s test-env/Line.pbt
+    - [[ "`stat -c %s test-env/Line.pbt`" > "`stat -c %s test-env/Line-old.pbt`" ]]
