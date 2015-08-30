@@ -176,7 +176,7 @@ void pack(char *theme, const char *config)
 	free(data);
 	free(header);
 	
-	if(remove(theme) == 0 && rename(temp, theme) == 0)
+	if(remove(theme) != 0 || rename(temp, theme) != 0)
 		terminate("Error while renaming %s to %s", temp, theme);
 }
 
