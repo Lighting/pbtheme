@@ -66,16 +66,16 @@ void unpack(char *theme, const char *config)
 	data = malloc(iheader[5] + 16);
 	memset(cdata, 0, sizeof(cdata));
 	memset(data, 0, sizeof(data));
-	fseek(fd, iheader[6], SEEK_SET);
-	fread(cdata, 1, iheader[7], fd);
+	fseek(tfd, iheader[6], SEEK_SET);
+	fread(cdata, 1, iheader[7], tfd);
 	if(uncompress(data, &len, cdata, iheader[7]) != Z_OK)
 		terminate("decompression error");
 	
 	//open config for writing
-	if(strcmp(name, "-") != 0)
-		ofd = fopen(name, "wb");
+	if(strcmp(config, "-") != 0)
+		ofd = fopen(config, "wb");
 	if(ofd == NULL)
-		terminate("Cannot open output file %s", name);
+		terminate("Cannot open output file %s", config);
 	
 	fwrite(data, 1, len, ofd);
 	
@@ -130,7 +130,7 @@ void pack(char *theme, const char *config)
 	tdata = malloc(clen);
 	compress2(tdata, &clen, data, len, 9);
 	fclose(ifd);
-	fprintf(stderr, "\nlen=%d, clen=%d\n", len, clen);
+fprintf(stderr, "\nlen=%u, clen=%u\n", len, clen);
 	//edit beginning of header for new config
 	iheader = (int *) header;
 	iheader[5] = len;
@@ -154,7 +154,7 @@ void pack(char *theme, const char *config)
 	ofd = fopen(temp, "w+b");
 	if(ofd == NULL)
 		terminate("Cannot open temporary file");
-	fprintf(stderr, "\nheadersize=%d, clen=%d, clen-delta=%d\n", headersize, clen, clen - delta);
+fprintf(stderr, "\nheadersize=%d, clen=%u, clen-delta=%u\n", headersize, clen, clen - delta);
 	//write new theme to temp file
 	fseek(ofd, 0, SEEK_SET);
 	fwrite(header, 1, headersize, ofd);
