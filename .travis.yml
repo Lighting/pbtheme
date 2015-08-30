@@ -18,14 +18,15 @@ script:
     
     - ./pbtheme -p test-env/Line.pbt theme.cfg
     - test -s test-env/Line.pbt
-    - stat -c %s test-env/Line.pbt test-env/Line-old.pbt
+    - stat -c %s test-env/Line-old.pbt test-env/Line.pbt
     
     - ./pbtheme -u test-env/Line.pbt > new-theme.cfg
     - test -s new-theme.cfg
+    - stat -c %s new-theme.cfg theme.cfg
     - diff new-theme.cfg theme.cfg
     
     - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
     - test -s test-env/Line.pbt
-    - stat -c %s test-env/Line.pbt test-env/Line-old.pbt
-    - ! diff test-env/Line-old.pbt test-env/Line.pbt
+    - stat -c %s test-env/Line-old.pbt test-env/Line.pbt
+    - ! diff test-env/Line.pbt test-env/Line-old.pbt
     - test "`stat -c %s test-env/Line.pbt`" -lt "`stat -c %s test-env/Line-old.pbt`"
