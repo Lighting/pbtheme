@@ -161,18 +161,20 @@ void pack(char *theme, const char *config)
 	}
 	
 	//write new theme to temp file
+	fseek(ofd, 0, SEEK_SET);
 	fwrite(header, 1, headersize, ofd);
 	fwrite(tdata, 1, clen, ofd);
-	free(header);
 	free(tdata);
 	
 	//write theme data to temp file
+	fseek(tfd, clen - delta, SEEK_CUR);
 	while((len = fread(data, 1, sizeof(data), tfd)) > 0)
 		fwrite(data, 1, len, ofd);
 	
 	fclose(tfd);
 	fclose(ofd);
 	free(data);
+	free(header);
 	
 	if(remove(theme) == 0 && rename(temp, theme) == 0)
 		terminate("Error while renaming %s to %s", temp, theme);
