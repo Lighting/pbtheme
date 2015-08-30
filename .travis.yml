@@ -17,12 +17,12 @@ script:
     
     - ./pbtheme -p test-env/Line.pbt theme.cfg
     - test -s test-env/Line.pbt
+    - stat -c %s test-env/Line.pbt test-env/Line-old.pbt
     - diff test-env/Line-old.pbt test-env/Line.pbt
+
     - echo test >> theme.cfg
-    
     - ./pbtheme -p test-env/Line.pbt theme.cfg
     - test -s test-env/Line.pbt
+    - stat -c %s test-env/Line.pbt test-env/Line-old.pbt
     - ! diff test-env/Line-old.pbt test-env/Line.pbt
-    - stat -c %s test-env/Line-old.pbt
-    - stat -c %s test-env/Line.pbt
     - test "`stat -c %s test-env/Line.pbt`" -gt "`stat -c %s test-env/Line-old.pbt`"
