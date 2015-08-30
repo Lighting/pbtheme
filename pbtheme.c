@@ -63,10 +63,11 @@ void unpack(char *theme, const char *config)
 	//unpack config
 	iheader = (unsigned int *) buf;
 fprintf(stderr, "\nucomp=%d, pos=%d, comp=%d\n", iheader[5], iheader[6], iheader[7]);
+	len = iheader[5];
+	data = malloc(len);
 	cdata = malloc(iheader[7]);
-	data = malloc(iheader[5] + 16);
-	memset(cdata, 0, sizeof(cdata));
 	memset(data, 0, sizeof(data));
+	memset(cdata, 0, sizeof(cdata));
 	fseek(tfd, iheader[6], SEEK_SET);
 	fread(cdata, 1, iheader[7], tfd);
 	if(uncompress(data, &len, cdata, iheader[7]) != Z_OK)
@@ -127,7 +128,10 @@ void pack(char *theme, const char *config)
 	if(len == MAXSIZE)
 		terminate("Config %s is too big", config);
 	data[len++] = 0;
-	clen = len + 16384;
+	if(len != 0)
+		clen = len + (len / 1000) + 12;
+	else
+		clen = 12;
 	tdata = malloc(clen);
 	compress2(tdata, &clen, data, len, 9);
 	fclose(ifd);
@@ -148,7 +152,9 @@ fprintf(stderr, "\nlen=%u, clen=%u\n", len, clen);
 		iheader = ((int *) (hpos + 4));
 		iheader[1] = iheader[1] + delta;
 		hpos += 12;
-		hpos += ((strlen(hpos) / 4) + 1) * 4;
+		len = strlen(hpos);
+		if(len != 0)
+			hpos += (len / 4) + 1) * 4;
 	}
 
 	//create temp file
