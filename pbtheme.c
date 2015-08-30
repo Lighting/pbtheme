@@ -87,14 +87,14 @@ void unpack(char *theme, const char *config)
 	
 	//unpack config
 	iheader = (unsigned int *) buf;
-	unpack_resource(ifd, config, iheader[5], iheader[6], iheader[7]);
+	unpack_resource(tfd, config, iheader[5], iheader[6], iheader[7]);
 	fclose(tfd);
 }
 
 void pack(char *theme, const char *config)
 {
 	FILE *ofd, *tfd, *ifd = stdin;
-	char buf[32], temp;
+	char buf[32], *temp;
 	unsigned char *data, *tdata, *header, *hpos;
 	unsigned long len, clen;
 	unsigned int *iheader;
@@ -167,7 +167,7 @@ void pack(char *theme, const char *config)
 	free(tdata);
 	
 	//write theme data to temp file
-	while(0 < (len = fread(data, 1, sizeof(data), tfd))
+	while((len = fread(data, 1, sizeof(data), tfd)) > 0)
 		fwrite(data, 1, len, ofd);
 	
 	fclose(tfd);
