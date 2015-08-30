@@ -38,39 +38,14 @@ void usage(char **argv)
 	fprintf(stderr, "Report bugs to <https://github.com/Lighting/pbtheme/issues>");
 }
 
-void unpack_resource(FILE *fd, const char *name, unsigned long len, int pos, unsigned long clen)
-{
-	unsigned char *data, *cdata;
-	FILE *ofd = stdout;
-	int r;
-	
-	cdata = malloc(clen);
-	data = malloc(len+16);
-	memset(cdata, 0, sizeof(cdata));
-	memset(data, 0, sizeof(data));
-	fseek(fd, pos, SEEK_SET);
-	fread(cdata, 1, clen, fd);
-	r = uncompress(data, &len, cdata, clen);
-	if(r != Z_OK)
-		terminate("decompression error");
-	
-	//open config for writing
-	if(strcmp(name, "-") != 0)
-		ofd = fopen(name, "wb");
-	if(ofd == NULL)
-		terminate("Cannot open output file %s", name);
-	
-	fwrite(data, 1, len, ofd);
-	fclose(ofd);
-	free(cdata);
-	free(data);
-}
-
 void unpack(char *theme, const char *config)
 {
+	FILE *ofd = stdout;
+	FILE *tfd;
 	char buf[32];
 	unsigned int *iheader;
-	FILE *tfd;
+	unsigned char *data, *cdata;
+	unsigned long len;
 	
 	//open theme file for reading
 	tfd = fopen(theme, "rb");
@@ -87,13 +62,33 @@ void unpack(char *theme, const char *config)
 	
 	//unpack config
 	iheader = (unsigned int *) buf;
-	unpack_resource(tfd, config, iheader[5], iheader[6], iheader[7]);
+	cdata = malloc(iheader[7]);
+	data = malloc(iheader[5] + 16);
+	memset(cdata, 0, sizeof(cdata));
+	memset(data, 0, sizeof(data));
+	fseek(fd, iheader[6], SEEK_SET);
+	fread(cdata, 1, iheader[7], fd);
+	if(uncompress(data, &len, cdata, iheader[7]) != Z_OK)
+		terminate("decompression error");
+	
+	//open config for writing
+	if(strcmp(name, "-") != 0)
+		ofd = fopen(name, "wb");
+	if(ofd == NULL)
+		terminate("Cannot open output file %s", name);
+	
+	fwrite(data, 1, len, ofd);
+	
+	fclose(ofd);
 	fclose(tfd);
+	free(cdata);
+	free(data);
 }
 
 void pack(char *theme, const char *config)
 {
-	FILE *ofd, *tfd, *ifd = stdin;
+	FILE *ifd = stdin;
+	FILE *ofd, *tfd;
 	char buf[32], temp[L_tmpnam];
 	unsigned char *data, *tdata, *header, *hpos;
 	unsigned long len, clen;
@@ -112,7 +107,7 @@ void pack(char *theme, const char *config)
 		terminate("%s is not a PocketBook theme file", theme);
 	if(buf[15] != PBTVERSION)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
-	headersize = *((int *) (buf+16));
+	headersize = *((int *) (buf + 16));
 	
 	//read full header
 	header = malloc(headersize);
@@ -144,11 +139,11 @@ void pack(char *theme, const char *config)
 	iheader[7] = clen;
 	
 	//edit ending header for new config
-	hpos = header+32;
-	while(hpos < header+headersize)
+	hpos = header + 32;
+	while(hpos < (header + headersize))
 	{
 		//shift position to offset
-		iheader = ((int *) (hpos+4));
+		iheader = ((int *) (hpos + 4));
 		iheader[1] = iheader[1] + delta;
 		hpos += 12;
 		hpos += ((strlen(hpos) / 4) + 1) * 4;
