@@ -22,7 +22,7 @@ script:
     
     - ./pbtheme -p test-env/Line.pbt theme.cfg
     - test -s test-env/Line.pbt
-    - test "`diff test-env/Line-old.pbt test-env/Line.pbt`" = 1
+    - ! diff test-env/Line-old.pbt test-env/Line.pbt
     - stat -c %s test-env/Line-old.pbt
     - stat -c %s test-env/Line.pbt
     - test "`stat -c %s test-env/Line.pbt`" -gt "`stat -c %s test-env/Line-old.pbt`"
