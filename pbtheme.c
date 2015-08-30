@@ -153,7 +153,7 @@ fprintf(stderr, "\nlen=%lu, clen=%lu\n", len, clen);
 		hpos += 12;
 		len = strlen(hpos);
 		if(len != 0)
-			hpos += (len / 4) + 1) * 4;
+			hpos += ((len / 4) + 1) * 4;
 	}
 
 	//create temp file
