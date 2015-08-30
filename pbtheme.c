@@ -59,7 +59,7 @@ void unpack(char *theme, const char *config)
 		terminate("%s is not a PocketBook theme file", theme);
 	if(buf[15] != PBTVERSION)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
-	
+fprintf(stderr, "\nucomp=%d, pos=%d, comp=%d\n", iheader[5], iheader[6], iheader[7]);
 	//unpack config
 	iheader = (unsigned int *) buf;
 	cdata = malloc(iheader[7]);
