@@ -131,7 +131,7 @@ void pack(char *theme, const char *config)
 	//compress config
 	if(len == MAXSIZE)
 		terminate("Config %s is too big", config);
-	data[len++] = 0;
+//	data[len++] = 0;
 	if(len != 0)
 		clen = len + (len / 1000) + 12;
 	else
