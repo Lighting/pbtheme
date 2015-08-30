@@ -114,17 +114,17 @@ void pack(char *theme, const char *config)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
 	headersize = *((int *) (buf+16));
 	
+	//read full header
+	header = malloc(headersize);
+	fseek(tfd, 0, SEEK_SET);
+	fread(header, 1, headersize, tfd);
+
 	//open config for reading
 	if(strcmp(config, "-") != 0)
 		ifd = fopen(config, "rb");
 	if(ifd == NULL)
 		terminate("Cannot open config file %s", config);
-	
-	//read full header
-	header = malloc(headersize);
-	fseek(tfd, 0, SEEK_SET);
-	fread(header, 1, headersize, tfd);
-	
+
 	//read and compress config
 	data = malloc(MAXSIZE);
 	len = fread(data, 1, sizeof(data), ifd);
@@ -135,12 +135,6 @@ void pack(char *theme, const char *config)
 	tdata = malloc(clen);
 	compress2(tdata, &clen, data, len, 9);
 	fclose(ifd);
-	
-	//create temp file
-	tmpnam(temp);
-	ofd = fopen(temp, "w+b");
-	if(ofd == NULL)
-		terminate("Cannot open temporary file");
 	
 	//edit beginning of header for new config
 	iheader = (int *) header;
@@ -159,6 +153,12 @@ void pack(char *theme, const char *config)
 		hpos += 12;
 		hpos += ((strlen(hpos) / 4) + 1) * 4;
 	}
+
+	//create temp file
+	tmpnam(temp);
+	ofd = fopen(temp, "w+b");
+	if(ofd == NULL)
+		terminate("Cannot open temporary file");
 	
 	//write new theme to temp file
 	fseek(ofd, 0, SEEK_SET);
