@@ -60,7 +60,7 @@ void unpack(char *theme, const char *config)
 	if(buf[15] != PBTVERSION)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
 
-	//unpack config
+	//read config
 	iheader = (unsigned int *) buf;
 	len = iheader[5];
 	data = malloc(len);
@@ -70,6 +70,8 @@ void unpack(char *theme, const char *config)
 	fseek(tfd, iheader[6], SEEK_SET);
 	fread(cdata, 1, iheader[7], tfd);
 	fclose(tfd);
+	
+	//unpack config
 	if(uncompress(data, &len, cdata, iheader[7]) != Z_OK)
 		terminate("decompression error");
 	free(cdata);
@@ -121,10 +123,12 @@ void pack(char *theme, const char *config)
 	if(ifd == NULL)
 		terminate("Cannot open config file %s", config);
 
-	//read and compress config
+	//read config
 	data = malloc(MAXSIZE);
 	len = fread(data, 1, sizeof(data), ifd);
 	fclose(ifd);
+	
+	//compress config
 	if(len == MAXSIZE)
 		terminate("Config %s is too big", config);
 	data[len++] = 0;
@@ -132,9 +136,11 @@ void pack(char *theme, const char *config)
 		clen = len + (len / 1000) + 12;
 	else
 		clen = 12;
+fprintf(stderr, "\nlen=%lu, clen=%lu\n", len, clen);
 	tdata = malloc(clen);
-	compress2(tdata, &clen, data, len, 9);
-
+	if(compress2(tdata, &clen, data, len, 9) != Z_OK)
+		terminate("compression error");
+	
 	//edit beginning of header for new config
 fprintf(stderr, "\nlen=%lu, clen=%lu\n", len, clen);
 	iheader = (int *) header;
@@ -178,7 +184,8 @@ fprintf(stderr, "\nheadersize=%d, clen=%lu, clen-delta=%lu\n", headersize, clen,
 	fclose(tfd);
 	fclose(ofd);
 	free(data);
-
+	
+	//replace theme file by temp file
 	if(remove(theme) != 0 || rename(temp, theme) != 0)
 		terminate("Error while renaming %s to %s", temp, theme);
 }
