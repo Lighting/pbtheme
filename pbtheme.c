@@ -62,7 +62,6 @@ void unpack(char *theme, const char *config)
 
 	//unpack config
 	iheader = (unsigned int *) buf;
-fprintf(stderr, "\nucomp=%d, pos=%d, comp=%d\n", iheader[5], iheader[6], iheader[7]);
 	len = iheader[5];
 	data = malloc(len);
 	cdata = malloc(iheader[7]);
@@ -70,8 +69,10 @@ fprintf(stderr, "\nucomp=%d, pos=%d, comp=%d\n", iheader[5], iheader[6], iheader
 	memset(cdata, 0, sizeof(cdata));
 	fseek(tfd, iheader[6], SEEK_SET);
 	fread(cdata, 1, iheader[7], tfd);
+	fclose(tfd);
 	if(uncompress(data, &len, cdata, iheader[7]) != Z_OK)
 		terminate("decompression error");
+	free(cdata);
 	
 	//open config for writing
 	if(strcmp(config, "-") != 0)
@@ -82,8 +83,6 @@ fprintf(stderr, "\nucomp=%d, pos=%d, comp=%d\n", iheader[5], iheader[6], iheader
 	fwrite(data, 1, len, ofd);
 	
 	fclose(ofd);
-	fclose(tfd);
-	free(cdata);
 	free(data);
 }
 
@@ -125,6 +124,7 @@ void pack(char *theme, const char *config)
 	//read and compress config
 	data = malloc(MAXSIZE);
 	len = fread(data, 1, sizeof(data), ifd);
+	fclose(ifd);
 	if(len == MAXSIZE)
 		terminate("Config %s is too big", config);
 	data[len++] = 0;
@@ -134,7 +134,6 @@ void pack(char *theme, const char *config)
 		clen = 12;
 	tdata = malloc(clen);
 	compress2(tdata, &clen, data, len, 9);
-	fclose(ifd);
 
 	//edit beginning of header for new config
 fprintf(stderr, "\nlen=%u, clen=%u\n", len, clen);
@@ -168,6 +167,7 @@ fprintf(stderr, "\nheadersize=%d, clen=%u, clen-delta=%u\n", headersize, clen, c
 	fseek(ofd, 0, SEEK_SET);
 	fwrite(header, 1, headersize, ofd);
 	fwrite(tdata, 1, clen, ofd);
+	free(header);
 	free(tdata);
 	
 	//write theme data to temp file
@@ -178,8 +178,7 @@ fprintf(stderr, "\nheadersize=%d, clen=%u, clen-delta=%u\n", headersize, clen, c
 	fclose(tfd);
 	fclose(ofd);
 	free(data);
-	free(header);
-	
+
 	if(remove(theme) != 0 || rename(temp, theme) != 0)
 		terminate("Error while renaming %s to %s", temp, theme);
 }
