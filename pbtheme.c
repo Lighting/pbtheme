@@ -94,7 +94,7 @@ void unpack(char *theme, const char *config)
 void pack(char *theme, const char *config)
 {
 	FILE *ofd, *tfd, *ifd = stdin;
-	char buf[32], *temp;
+	char buf[32], temp[L_tmpnam];
 	unsigned char *data, *tdata, *header, *hpos;
 	unsigned long len, clen;
 	unsigned int *iheader;
@@ -137,7 +137,7 @@ void pack(char *theme, const char *config)
 	fclose(ifd);
 	
 	//create temp file
-	temp = tmpnam(theme);
+	tmpnam(temp);
 	ofd = fopen(temp, "w+b");
 	if(ofd == NULL)
 		terminate("Cannot open temporary file");
