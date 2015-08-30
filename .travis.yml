@@ -8,20 +8,23 @@ install: make
 
 before_script:
     - cp test-env/Line.pbt test-env/Line-old.pbt
-    - touch new-theme.cfg
+    - touch empty-theme.cfg
 
 script:
     - ./pbtheme -h
     
-    - ./pbtheme test-env/Line.pbt > theme.cfg
+    - ./pbtheme test-env/Line.pbt theme.cfg
     - test -s theme.cfg
     
     - ./pbtheme -p test-env/Line.pbt theme.cfg
     - test -s test-env/Line.pbt
     - stat -c %s test-env/Line.pbt test-env/Line-old.pbt
-    - diff test-env/Line-old.pbt test-env/Line.pbt
-
-    - ./pbtheme -p test-env/Line.pbt new-theme.cfg
+    
+    - ./pbtheme -u test-env/Line.pbt > new-theme.cfg
+    - test -s new-theme.cfg
+    - diff new-theme.cfg theme.cfg
+    
+    - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
     - test -s test-env/Line.pbt
     - stat -c %s test-env/Line.pbt test-env/Line-old.pbt
     - ! diff test-env/Line-old.pbt test-env/Line.pbt
