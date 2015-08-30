@@ -136,7 +136,7 @@ void pack(char *theme, const char *config)
 	compress2(tdata, &clen, data, len, 9);
 
 	//edit beginning of header for new config
-fprintf(stderr, "\nlen=%u, clen=%u\n", len, clen);
+fprintf(stderr, "\nlen=%lu, clen=%lu\n", len, clen);
 	iheader = (int *) header;
 	iheader[5] = len;
 	//calc position offset
@@ -163,7 +163,7 @@ fprintf(stderr, "\nlen=%u, clen=%u\n", len, clen);
 		terminate("Cannot open temporary file");
 
 	//write new theme to temp file
-fprintf(stderr, "\nheadersize=%d, clen=%u, clen-delta=%u\n", headersize, clen, clen - delta);
+fprintf(stderr, "\nheadersize=%d, clen=%lu, clen-delta=%lu\n", headersize, clen, clen - delta);
 	fseek(ofd, 0, SEEK_SET);
 	fwrite(header, 1, headersize, ofd);
 	fwrite(tdata, 1, clen, ofd);
