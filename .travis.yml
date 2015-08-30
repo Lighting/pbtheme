@@ -29,5 +29,5 @@ script:
     - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
     - test -s test-env/Line.pbt
     - stat -c %s test-env/Line-old.pbt test-env/Line.pbt
-    - ! diff test-env/Line.pbt test-env/Line-old.pbt
+    - test "`cmp test-env/Line.pbt test-env/Line-old.pbt`" = 1
     - test "`stat -c %s test-env/Line.pbt`" -lt "`stat -c %s test-env/Line-old.pbt`"
