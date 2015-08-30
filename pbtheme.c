@@ -131,18 +131,15 @@ void pack(char *theme, const char *config)
 	//compress config
 	if(len == MAXSIZE)
 		terminate("Config %s is too big", config);
-//	data[len++] = 0;
 	if(len != 0)
 		clen = len + (len / 1000) + 12;
 	else
 		clen = 12;
-fprintf(stderr, "\nlen=%lu, clen=%lu\n", len, clen);
 	tdata = malloc(clen);
 	if(compress2(tdata, &clen, data, len, 9) != Z_OK)
 		terminate("compression error");
 	
 	//edit beginning of header for new config
-fprintf(stderr, "\nlen=%lu, clen=%lu\n", len, clen);
 	iheader = (int *) header;
 	iheader[5] = len;
 	//calc position offset
@@ -169,7 +166,6 @@ fprintf(stderr, "\nlen=%lu, clen=%lu\n", len, clen);
 		terminate("Cannot open temporary file");
 
 	//write new theme to temp file
-fprintf(stderr, "\nheadersize=%d, clen=%lu, clen-delta=%lu\n", headersize, clen, clen - delta);
 	fseek(ofd, 0, SEEK_SET);
 	fwrite(header, 1, headersize, ofd);
 	fwrite(tdata, 1, clen, ofd);
