@@ -46,17 +46,20 @@ void unpack_resource(FILE *fd, const char *name, unsigned long len, int pos, uns
 	
 	cdata = malloc(clen);
 	data = malloc(len+16);
-	memset(cdata, 0, clen);
-	memset(data, 0, len+16);
+	memset(cdata, 0, sizeof(cdata));
+	memset(data, 0, sizeof(data));
 	fseek(fd, pos, SEEK_SET);
 	fread(cdata, 1, clen, fd);
 	r = uncompress(data, &len, cdata, clen);
 	if(r != Z_OK)
 		terminate("decompression error");
+	
+	//open config for writing
 	if(strcmp(name, "-") != 0)
 		ofd = fopen(name, "wb");
 	if(ofd == NULL)
 		terminate("Cannot open output file %s", name);
+	
 	fwrite(data, 1, len, ofd);
 	fclose(ofd);
 	free(cdata);
@@ -67,84 +70,112 @@ void unpack(char *theme, const char *config)
 {
 	char buf[32];
 	unsigned int *iheader;
-	FILE *ifd;
+	FILE *tfd;
 	
-	ifd = fopen(theme, "rb");
-	if(ifd == NULL)
+	//open theme file for reading
+	tfd = fopen(theme, "rb");
+	if(tfd == NULL)
 		terminate("Cannot open theme file %s", theme);
 	
-	memset(buf, 0, 32);
-	fread(buf, 1, 32, ifd);
+	//read beginning of header
+	memset(buf, 0, sizeof(buf));
+	fread(buf, 1, sizeof(buf), tfd);
 	if(strncmp(buf, PBTSIGNATURE, strlen(PBTSIGNATURE)) != 0)
 		terminate("%s is not a PocketBook theme file", theme);
 	if(buf[15] != PBTVERSION)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
 	
+	//unpack config
 	iheader = (unsigned int *) buf;
 	unpack_resource(ifd, config, iheader[5], iheader[6], iheader[7]);
+	fclose(tfd);
 }
 
 void pack(char *theme, const char *config)
 {
-	FILE *tfd, *ofd, *ifd = stdin;
-	char buf[32];
+	FILE *ofd, *tfd, *ifd = stdin;
+	char buf[32], temp;
+	unsigned char *data, *tdata, *header, *hpos;
+	unsigned long len, clen;
+	unsigned int *iheader;
 	int headersize, delta;
-	unsigned char *data, *data2;
-	unsigned long len, clen, pos;
-	unsigned int *idata;
-
-	ofd = fopen(theme, "r+b");
-	if(ofd == NULL)
+	
+	//open theme file for reading
+	tfd = fopen(theme, "rb");
+	if(tfd == NULL)
 		terminate("Cannot open theme file %s", theme);
 	
-	memset(buf, 0, 32);
-	fread(buf, 1, 32, ofd);
+	//read beginning of header
+	memset(buf, 0, sizeof(buf));
+	fread(buf, 1, sizeof(buf), tfd);
 	if(strncmp(buf, PBTSIGNATURE, strlen(PBTSIGNATURE)) != 0)
 		terminate("%s is not a PocketBook theme file", theme);
 	if(buf[15] != PBTVERSION)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
 	headersize = *((int *) (buf+16));
 	
+	//open config for reading
 	if(strcmp(config, "-") != 0)
 		ifd = fopen(config, "rb");
 	if(ifd == NULL)
 		terminate("Cannot open config file %s", config);
+	
+	//read full header
+	header = malloc(headersize);
+	fseek(tfd, 0, SEEK_SET);
+	fread(header, 1, headersize, tfd);
+	
+	//read and compress config
 	data = malloc(MAXSIZE);
-	len = fread(data, 1, MAXSIZE, ifd);
+	len = fread(data, 1, sizeof(data), ifd);
 	if(len == MAXSIZE)
 		terminate("Config %s is too big", config);
 	data[len++] = 0;
 	clen = len + 16384;
-	data2 = malloc(clen);
-	compress2(data2, &clen, data, len, 9);
+	tdata = malloc(clen);
+	compress2(tdata, &clen, data, len, 9);
+	fclose(ifd);
 	
-	tfd = tmpfile();
-	if(tfd == NULL)
+	//create temp file
+	temp = tmpnam(theme);
+	ofd = fopen(temp, "w+b");
+	if(ofd == NULL)
 		terminate("Cannot open temporary file");
 	
-	fseek(ofd, 20, SEEK_SET);
-	fwrite(len, 1, 4, ofd);
-	fseek(ofd, 28, SEEK_SET);
-	fread(data, 1, 4, ifd);
-	idata = (int *) data;
-	delta = clen - idata[0];
-	fwrite(clen, 1, 4, ofd);
+	//edit beginning of header for new config
+	iheader = (int *) header;
+	iheader[5] = len;
+	//calc position offset
+	delta = clen - iheader[7];
+	iheader[7] = clen;
 	
-	pos = 32;
-	while (pos < headersize)
+	//edit ending header for new config
+	hpos = header+32;
+	while(hpos < header+headersize)
 	{
-		fseek(ofd, pos+4, SEEK_SET);
-		fread(data, 1, 4, ifd);
-		idata[0] = idata[0] + delta;
-		fwrite(data, 1, 4, ofd);
-		pos += 12;
-		pos += ((strlen(hpos) / 4) + 1) * 4;
+		//shift position to offset
+		iheader = ((int *) (hpos+4));
+		iheader[1] = iheader[1] + delta;
+		hpos += 12;
+		hpos += ((strlen(hpos) / 4) + 1) * 4;
 	}
 	
-
+	//write new theme to temp file
+	fwrite(header, 1, headersize, ofd);
+	fwrite(tdata, 1, clen, ofd);
+	free(header);
+	free(tdata);
+	
+	//write theme data to temp file
+	while(0 < (len = fread(data, 1, sizeof(data), tfd))
+		fwrite(data, 1, len, ofd);
+	
 	fclose(tfd);
-	fclose(ifd);
 	fclose(ofd);
+	free(data);
+	
+	if(remove(theme) == 0 && rename(temp, theme) == 0)
+		terminate("Error while renaming %s to %s", temp, theme);
 }
 
 int main(int argc, char **argv)
