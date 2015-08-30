@@ -8,4 +8,6 @@ install: make
 
 script:
     - ./pbtheme -h
-    - ./pbtheme -u test-env/Line.pbt
+    - ./pbtheme test-env/Line.pbt > theme.cfg
+    - test -s theme.cfg
+    - ./pbtheme -p test-env/Line.pbt theme.cfg
