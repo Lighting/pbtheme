@@ -7,26 +7,19 @@ compiler: gcc
 install: make
 
 before_script:
-    - cp test-env/Line.pbt test-env/Line-old.pbt
     - touch empty-theme.cfg
 
 script:
     - ./pbtheme -h
     
     - ./pbtheme test-env/Line.pbt theme.cfg
-    - test -s theme.cfg
-    - stat -c %s theme.cfg
+    - test "`stat -c %s theme.cfg`" = 227394
 
     - ./pbtheme -p test-env/Line.pbt theme.cfg
-    - test -s test-env/Line.pbt
-    - stat -c %s test-env/Line-old.pbt test-env/Line.pbt
-    
+    - test "`stat -c %s test-env/Line.pbt`" = 520290
+
     - ./pbtheme -u test-env/Line.pbt > new-theme.cfg
-    - test -s new-theme.cfg
-    - stat -c %s new-theme.cfg theme.cfg
     - diff new-theme.cfg theme.cfg
     
     - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
-    - test -s test-env/Line.pbt
-    - stat -c %s test-env/Line-old.pbt test-env/Line.pbt
-    - test "`stat -c %s test-env/Line.pbt`" -lt "`stat -c %s test-env/Line-old.pbt`"
+    - test "`stat -c %s test-env/Line.pbt`" = 494527
