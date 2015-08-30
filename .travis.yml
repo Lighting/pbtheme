@@ -12,4 +12,5 @@ script:
     - ./pbtheme test-env/Line.pbt > theme.cfg
     - test -s theme.cfg
     - ./pbtheme -p test-env/Line.pbt theme.cfg
+    - test -s test-env/Line.pbt
     - cmp test-env/Line-old.pbt test-env/Line.pbt
