@@ -59,9 +59,10 @@ void unpack(char *theme, const char *config)
 		terminate("%s is not a PocketBook theme file", theme);
 	if(buf[15] != PBTVERSION)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
-fprintf(stderr, "\nucomp=%d, pos=%d, comp=%d\n", iheader[5], iheader[6], iheader[7]);
+
 	//unpack config
 	iheader = (unsigned int *) buf;
+fprintf(stderr, "\nucomp=%d, pos=%d, comp=%d\n", iheader[5], iheader[6], iheader[7]);
 	cdata = malloc(iheader[7]);
 	data = malloc(iheader[5] + 16);
 	memset(cdata, 0, sizeof(cdata));
@@ -130,8 +131,9 @@ void pack(char *theme, const char *config)
 	tdata = malloc(clen);
 	compress2(tdata, &clen, data, len, 9);
 	fclose(ifd);
-fprintf(stderr, "\nlen=%u, clen=%u\n", len, clen);
+
 	//edit beginning of header for new config
+fprintf(stderr, "\nlen=%u, clen=%u\n", len, clen);
 	iheader = (int *) header;
 	iheader[5] = len;
 	//calc position offset
@@ -154,8 +156,9 @@ fprintf(stderr, "\nlen=%u, clen=%u\n", len, clen);
 	ofd = fopen(temp, "w+b");
 	if(ofd == NULL)
 		terminate("Cannot open temporary file");
-fprintf(stderr, "\nheadersize=%d, clen=%u, clen-delta=%u\n", headersize, clen, clen - delta);
+
 	//write new theme to temp file
+fprintf(stderr, "\nheadersize=%d, clen=%u, clen-delta=%u\n", headersize, clen, clen - delta);
 	fseek(ofd, 0, SEEK_SET);
 	fwrite(header, 1, headersize, ofd);
 	fwrite(tdata, 1, clen, ofd);
