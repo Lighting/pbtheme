@@ -14,8 +14,6 @@
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
 
-static const char *default_config = "theme.cfg";
-
 void terminate(const char *fmt, ...)
 {
 	va_list ap;
@@ -30,17 +28,20 @@ void terminate(const char *fmt, ...)
 
 void usage(char **argv)
 {
-	fprintf(stderr, "Usage: %s [OPTION] <theme.pbt> [<%s>]\n", argv[0], default_config);
-	fprintf(stderr, "Pack/unpack config of PocketBook theme\n");
-	fprintf(stderr, "\t-p\tpack <%s> to <theme.pbt>\n", default_config);
-	fprintf(stderr, "\t-u\tunpack <%s> from <theme.pbt>\n", default_config);
-	exit(1);
+	fprintf(stderr, "Usage: %s [OPTION] THEME [CONFIG]\n", argv[0]);
+	fprintf(stderr, "Pack/unpack CONFIG of PocketBook theme (by default, unpack)\n\n");
+	fprintf(stderr, "Options:\n");
+	fprintf(stderr, "\t-h\tdisplay this help and exit\n");
+	fprintf(stderr, "\t-p\tpack CONFIG to THEME in-place\n");
+	fprintf(stderr, "\t-u\tunpack CONFIG from THEME\n\n");
+	fprintf(stderr, "With no CONFIG, or when CONFIG is -, read/write standard input/output.\n\n");
+	fprintf(stderr, "Report bugs to <https://github.com/Lighting/pbtheme/issues>");
 }
 
 void unpack_resource(FILE *fd, const char *name, unsigned long len, int pos, unsigned long clen)
 {
 	unsigned char *data, *cdata;
-	FILE *ofd;
+	FILE *ofd = stdout;
 	int r;
 	
 	cdata = malloc(clen);
@@ -52,7 +53,8 @@ void unpack_resource(FILE *fd, const char *name, unsigned long len, int pos, uns
 	r = uncompress(data, &len, cdata, clen);
 	if(r != Z_OK)
 		terminate("decompression error");
-	ofd = fopen(name, "wb");
+	if(strcmp(name, "-") != 0)
+		ofd = fopen(name, "wb");
 	if(ofd == NULL)
 		terminate("Cannot open output file %s", name);
 	fwrite(data, 1, len, ofd);
@@ -61,50 +63,106 @@ void unpack_resource(FILE *fd, const char *name, unsigned long len, int pos, uns
 	free(data);
 }
 
-void pack(char *theme, const char *config)
-{
-	terminate("This function not supported yet");
-}
-
 void unpack(char *theme, const char *config)
 {
 	char buf[32];
-	unsigned char *header;
 	unsigned int *iheader;
-	int headersize;
-	FILE *tfd;
+	FILE *ifd;
 	
-	tfd = fopen(theme, "rb");
-	if(tfd == NULL)
+	ifd = fopen(theme, "rb");
+	if(ifd == NULL)
 		terminate("Cannot open theme file %s", theme);
 	
 	memset(buf, 0, 32);
-	fread(buf, 1, 32, tfd);
+	fread(buf, 1, 32, ifd);
 	if(strncmp(buf, PBTSIGNATURE, strlen(PBTSIGNATURE)) != 0)
 		terminate("%s is not a PocketBook theme file", theme);
 	if(buf[15] != PBTVERSION)
 		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
 	
-	headersize = *((int *) (buf+16));
-	if(headersize > MAXSIZE)
-		terminate("%s have too big header of PocketBook theme", theme);
+	iheader = (unsigned int *) buf;
+	unpack_resource(ifd, config, iheader[5], iheader[6], iheader[7]);
+}
+
+void pack(char *theme, const char *config)
+{
+	FILE *tfd, *ofd, *ifd = stdin;
+	char buf[32];
+	int headersize, delta;
+	unsigned char *data, *data2;
+	unsigned long len, clen, pos;
+	unsigned int *idata;
+
+	ofd = fopen(theme, "r+b");
+	if(ofd == NULL)
+		terminate("Cannot open theme file %s", theme);
 	
-	header = malloc(headersize);
-	iheader = (unsigned int *) header;
-	fseek(tfd, 0, SEEK_SET);
-	fread(header, 1, headersize, tfd);
-	unpack_resource(tfd, config, iheader[5], iheader[6], iheader[7]);
+	memset(buf, 0, 32);
+	fread(buf, 1, 32, ofd);
+	if(strncmp(buf, PBTSIGNATURE, strlen(PBTSIGNATURE)) != 0)
+		terminate("%s is not a PocketBook theme file", theme);
+	if(buf[15] != PBTVERSION)
+		terminate("%s have unsupported PocketBook theme version %d", theme, buf[15]);
+	headersize = *((int *) (buf+16));
+	
+	if(strcmp(config, "-") != 0)
+		ifd = fopen(config, "rb");
+	if(ifd == NULL)
+		terminate("Cannot open config file %s", config);
+	data = malloc(MAXSIZE);
+	len = fread(data, 1, MAXSIZE, ifd);
+	if(len == MAXSIZE)
+		terminate("Config %s is too big", config);
+	data[len++] = 0;
+	clen = len + 16384;
+	data2 = malloc(clen);
+	compress2(data2, &clen, data, len, 9);
+	
+	tfd = tmpfile();
+	if(tfd == NULL)
+		terminate("Cannot open temporary file");
+	
+	fseek(ofd, 20, SEEK_SET);
+	fwrite(len, 1, 4, ofd);
+	fseek(ofd, 28, SEEK_SET);
+	fread(data, 1, 4, ifd);
+	idata = (int *) data;
+	delta = clen - idata[0];
+	fwrite(clen, 1, 4, ofd);
+	
+	pos = 32;
+	while (pos < headersize)
+	{
+		fseek(ofd, pos+4, SEEK_SET);
+		fread(data, 1, 4, ifd);
+		idata[0] = idata[0] + delta;
+		fwrite(data, 1, 4, ofd);
+		pos += 12;
+		pos += ((strlen(hpos) / 4) + 1) * 4;
+	}
+	
+
+	fclose(tfd);
+	fclose(ifd);
+	fclose(ofd);
 }
 
 int main(int argc, char **argv)
 {
-	if(argc < 3)
+	if(argc < 2)
+	{
 		usage(argv);
+		terminate("Theme file not found\nFor help, type: %s -h", argv[1]);
+	}
 	
-	if(strcmp(argv[1], "-p") == 0)
-		pack(argv[2], (argc < 4) ? default_config : argv[3]);
-	else if(strcmp(argv[1], "-u") == 0)
-		unpack(argv[2], (argc < 4) ? default_config : argv[3]);
+	if(strcmp(argv[1], "-h") == 0)
+	    usage(argv);
+	else if(argc > 2 && strcmp(argv[1], "-p") == 0)
+		pack(argv[2], (argc > 3) ? argv[3] : "-");
+	else if(argc > 2 && strcmp(argv[1], "-u") == 0)
+		unpack(argv[2], (argc > 3) ? argv[3] : "-");
 	else
-		usage(argv);
+		unpack(argv[1], (argc > 2) ? argv[2] : "-");
+
+	return 0;
 }
