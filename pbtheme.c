@@ -135,7 +135,7 @@ void pack(char *theme, const char *config)
 	tdata = malloc(clen);
 	compress2(tdata, &clen, data, len, 9);
 	fclose(ifd);
-	
+	fprintf(stderr, "\nlen=%d, clen=%d\n", len, clen);
 	//edit beginning of header for new config
 	iheader = (int *) header;
 	iheader[5] = len;
@@ -159,7 +159,7 @@ void pack(char *theme, const char *config)
 	ofd = fopen(temp, "w+b");
 	if(ofd == NULL)
 		terminate("Cannot open temporary file");
-	
+	fprintf(stderr, "\nheadersize=%d, clen=%d, clen-delta=%d\n", headersize, clen, clen - delta);
 	//write new theme to temp file
 	fseek(ofd, 0, SEEK_SET);
 	fwrite(header, 1, headersize, ofd);
