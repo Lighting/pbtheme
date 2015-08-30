@@ -19,7 +19,7 @@ script:
     - test -s test-env/Line.pbt
     - diff test-env/Line-old.pbt test-env/Line.pbt
     
-    - echo test >> theme.cfg
+    - echo "test" >> theme.cfg
     - ./pbtheme -p test-env/Line.pbt theme.cfg
     - test -s test-env/Line.pbt
     - stat -c %s test-env/Line-old.pbt
