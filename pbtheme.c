@@ -65,8 +65,8 @@ void unpack(char *theme, const char *config)
 	len = iheader[5];
 	data = malloc(len);
 	cdata = malloc(iheader[7]);
-	memset(data, 0, sizeof(data));
-	memset(cdata, 0, sizeof(cdata));
+	memset(data, 0, len);
+	memset(cdata, 0, iheader[7]);
 	fseek(tfd, iheader[6], SEEK_SET);
 	fread(cdata, 1, iheader[7], tfd);
 	fclose(tfd);
@@ -125,7 +125,7 @@ void pack(char *theme, const char *config)
 
 	//read config
 	data = malloc(MAXSIZE);
-	len = fread(data, 1, sizeof(data), ifd);
+	len = fread(data, 1, MAXSIZE, ifd);
 	fclose(ifd);
 	
 	//compress config
@@ -178,7 +178,7 @@ fprintf(stderr, "\nheadersize=%d, clen=%lu, clen-delta=%lu\n", headersize, clen,
 	
 	//write theme data to temp file
 	fseek(tfd, clen - delta, SEEK_CUR);
-	while((len = fread(data, 1, sizeof(data), tfd)) > 0)
+	while((len = fread(data, 1, MAXSIZE, tfd)) > 0)
 		fwrite(data, 1, len, ofd);
 	
 	fclose(tfd);
