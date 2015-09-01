@@ -1,22 +1,13 @@
-PROJECT(cr3)
+PROJECT(pbtheme)
 cmake_minimum_required(VERSION 2.6)
 
 #INCLUDE(CPack)
 
-IF(NOT CMAKE_BUILD_TYPE)
-  SET(CMAKE_BUILD_TYPE Release CACHE STRING
-      "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-      FORCE)
-ENDIF(NOT CMAKE_BUILD_TYPE)
-
 ADD_DEFINITIONS( -DNDEBUG=1 )
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long")
-
 if (WIN32)
   ADD_DEFINITIONS( -DWIN32=1 -D_WIN32=1 -DCR_EMULATE_GETTEXT=1 -DNOMINMAX=1 -D_CRT_SECURE_NO_WARNINGS )
 else()
   ADD_DEFINITIONS( -DLINUX=1 -D_LINUX=1 )
 endif(WIN32)
-
 FIND_PACKAGE(ZLIB)
