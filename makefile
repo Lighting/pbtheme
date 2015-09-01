@@ -18,5 +18,4 @@ PROG=pbtheme$(EXE)
 all: $(PROG)
 
 pbtheme$(EXE): $(SRC)
-	rm -f $(PROG)
 	$(CC) -g -o $@ $^ $(LDFLAGS) -lz -lstdc++ 
