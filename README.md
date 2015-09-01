@@ -5,6 +5,8 @@
 
 Поддерживается формат PocketBookTheme версии 1
 
+toolchain для сборки брать тут: https://github.com/pocketbook-free/SDK_481.git
+
 [travis-badge]:https://travis-ci.org/Lighting/pbtheme.svg?branch=master
 [travis-link]:https://travis-ci.org/Lighting/pbtheme
 [release-badge]:https://badge.fury.io/gh/lighting%2Fpbtheme.svg
