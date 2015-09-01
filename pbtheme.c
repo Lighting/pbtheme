@@ -35,7 +35,7 @@ void usage(char **argv)
 	fprintf(stderr, "\t-p\tpack CONFIG to THEME in-place\n");
 	fprintf(stderr, "\t-u\tunpack CONFIG from THEME\n\n");
 	fprintf(stderr, "With no CONFIG, or when CONFIG is -, read/write standard input/output.\n\n");
-	fprintf(stderr, "Report bugs to <https://github.com/Lighting/pbtheme/issues>");
+	fprintf(stderr, "Report bugs to <https://github.com/Lighting/pbtheme/issues>\n");
 }
 
 void unpack(char *theme, const char *config)
@@ -191,7 +191,7 @@ int main(int argc, char **argv)
 	if(argc < 2)
 	{
 		usage(argv);
-		terminate("Theme file not found\nFor help, type: %s -h", argv[1]);
+		terminate("Theme file not found\nFor help, type: %s -h", argv[0]);
 	}
 	
 	if(strcmp(argv[1], "-h") == 0)
