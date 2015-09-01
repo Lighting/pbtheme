@@ -1,5 +1,6 @@
 ifeq (${CROSS},pb)
 TOOLCHAIN_DIR=../SDK_481
+PATH:=$(CURDIR)/$(TOOLCHAIN_DIR)/libexec/gcc/arm-obreey-linux-gnueabi/4.8.1:$(PATH)
 CC=$(TOOLCHAIN_DIR)/arm-obreey-linux-gnueabi/bin/gcc -I$(TOOLCHAIN_DIR)/lib/gcc/arm-obreey-linux-gnueabi/4.8.1/include
 LDFLAGS += -L$(TOOLCHAIN_DIR)/lib/gcc/arm-obreey-linux-gnueabi/4.8.1
 EXE=
