@@ -147,11 +147,11 @@ void pack(char *theme, const char *config)
 	iheader[7] = clen;
 	
 	//edit ending header for new config
-	hpos = header + 32;
+	hpos = header + 32; //28 + 4
 	while(hpos < (header + headersize))
 	{
 		//shift position to offset
-		iheader = ((int *) (hpos + 4));
+		iheader = ((int *) hpos);
 		iheader[1] = iheader[1] + delta;
 		hpos += 12;
 		len = strlen(hpos);
