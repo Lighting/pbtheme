@@ -2,6 +2,11 @@ language: c
 
 compiler: gcc
 
+sudo: required
+
+cache:
+  directories: SDK_481
+
 env:
   - CROSS=
   - CROSS=pb
