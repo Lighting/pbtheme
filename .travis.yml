@@ -2,8 +2,6 @@ language: c
 
 compiler: gcc
 
-sudo: false
-
 cache:
   directories: SDK_481
 
@@ -11,7 +9,7 @@ env:
   - CROSS=
   - CROSS=pb
 
-before_install: if [[ "$CROSS" == "pb" && ! -d SDK_481 ]]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
+before_install: test '"$CROSS" == "pb" && ! -d SDK_481' &&  git clone https://github.com/pocketbook-free/SDK_481.git
 
 install: make
 
