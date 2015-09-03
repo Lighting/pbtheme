@@ -5,14 +5,10 @@ compiler: gcc
 env:
   - CROSS=
   - CROSS=pb
+    before_install: git clone https://github.com/pocketbook-free/SDK_481.git
+    cache: directories: $HOME/SDK_481
 
-cache:
-  directories:
-    - $HOME/SDK_481
-
-before_install: git clone https://github.com/pocketbook-free/SDK_481.git
-
-install: make pb
+install: make
 
 before_script:
     - touch empty-theme.cfg
