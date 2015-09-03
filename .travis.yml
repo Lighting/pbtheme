@@ -16,7 +16,7 @@ script:
     - if [ -z "$CROSS" ]; then ./pbtheme -h ; fi
     
     - if [ -z "$CROSS" ]; then ./pbtheme test-env/Line.pbt theme.cfg ; fi
-    - if [ -z "$CROSS" ]; then test "`stat -c %s theme.cfg`" = 2273941 ; fi
+    - if [ -z "$CROSS" ]; then test "`stat -c %s theme.cfg`" = 227394 ; fi
   
     - if [ -z "$CROSS" ]; then ./pbtheme -p test-env/Line.pbt theme.cfg ; fi
     - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 520290 ; fi
