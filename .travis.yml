@@ -8,8 +8,7 @@ cache:
 env:
   - CROSS=
   - CROSS=pb
-
-before_install: test $CROSS = pb && git clone https://github.com/pocketbook-free/SDK_481.git
+  before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
 install: make
 
