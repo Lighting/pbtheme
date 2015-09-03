@@ -1,8 +1,7 @@
 ifeq (${CROSS},pb)
 TOOLCHAIN_DIR=../SDK_481
-PATH:=$(CURDIR)/$(TOOLCHAIN_DIR)/libexec/gcc/arm-obreey-linux-gnueabi/4.8.1:$(PATH)
-CC=$(TOOLCHAIN_DIR)/arm-obreey-linux-gnueabi/bin/gcc -I$(TOOLCHAIN_DIR)/lib/gcc/arm-obreey-linux-gnueabi/4.8.1/include
-LDFLAGS += -L$(TOOLCHAIN_DIR)/lib/gcc/arm-obreey-linux-gnueabi/4.8.1
+CC=$(TOOLCHAIN_DIR)/bin/arm-obreey-linux-gnueabi-gcc -I$(TOOLCHAIN_DIR)/include/c++/4.1.2 -I$(TOOLCHAIN_DIR)/include -I$(TOOLCHAIN_DIR)/arm-obreey-linux-gnueabi/sysroot/usr/include
+LDFLAGS += -L$(TOOLCHAIN_DIR)/arm-obreey-linux-gnueabi/sysroot/usr/lib
 EXE=
 endif
 
