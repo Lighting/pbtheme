@@ -3,8 +3,8 @@ language: c
 compiler: gcc
 
 env:
-  - CROSS=
-  - CROSS=pb
+  - CROSS =
+  - CROSS = pb
 
 before_install: if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
@@ -27,11 +27,15 @@ script:
     - if [ -z "$CROSS" ]; then ./pbtheme -p test-env/Line.pbt empty-theme.cfg ; fi
     - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
 
+after_success: if [ -z "$CROSS" ]; then env $SUCCESS = true ; fi
+
 deploy:
   provider: releases
   api_key: "ba169a1d791b2a6349d79285ab3a0d171bb04fdf"
   file: "pbtheme"
   skip_cleanup: true
   on:
-    condition: $CROSS = pb
+    condition:
+      - $CROSS = pb
+      - $SUCCESS = true
     tags: true
