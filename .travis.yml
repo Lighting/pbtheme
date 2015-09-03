@@ -3,10 +3,10 @@ language: c
 compiler: gcc
 
 env:
-#  - CROSS=
+  - CROSS=
   - CROSS=pb
 
-before_install: git clone https://github.com/pocketbook-free/SDK_481.git
+before_install: if [[ "$CROSS" == "pb" && ! -d SDK_481 ]]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
 install: make
 
