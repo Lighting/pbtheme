@@ -1,6 +1,7 @@
 SRC=pbtheme.c
 PROG=pbtheme$(EXE)
 STRIP=strip
+LDFLAGS += --strip-all
 
 ifeq (${CROSS},pb)
 TOOLCHAIN_DIR=SDK_481
