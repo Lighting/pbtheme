@@ -9,7 +9,7 @@ env:
 #  - CROSS=
   - CROSS=pb
 
-before_install: if [[ "$CROSS" == "pb" ]]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
+before_install: if [[ "$CROSS" == "pb" && ! "`git clone https://github.com/pocketbook-free/SDK_481.git`" ]]; then git pull https://github.com/pocketbook-free/SDK_481.git ; fi
 
 install: make
 
