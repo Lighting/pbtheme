@@ -3,7 +3,7 @@ language: c
 compiler: gcc
 
 cache:
-  directories: $HOME/SDK_481
+  directories: SDK_481
 
 env:
   - CROSS=
@@ -16,16 +16,16 @@ install: make
 before_script: touch empty-theme.cfg
 
 script:
-    - ./pbtheme -h
+    - if [[ ! "$CROSS" ]]; then ./pbtheme -h ; fi
     
-    - ./pbtheme test-env/Line.pbt theme.cfg
-    - test "`stat -c %s theme.cfg`" = 227394
+    - if [[ ! "$CROSS" ]]; then ./pbtheme test-env/Line.pbt theme.cfg ; fi
+    - if [[ ! "$CROSS" ]]; then test "`stat -c %s theme.cfg`" = 227394 ; fi
 
-    - ./pbtheme -p test-env/Line.pbt theme.cfg
-    - test "`stat -c %s test-env/Line.pbt`" = 520290
+    - if [[ ! "$CROSS" ]]; then ./pbtheme -p test-env/Line.pbt theme.cfg ; fi
+    - if [[ ! "$CROSS" ]]; then test "`stat -c %s test-env/Line.pbt`" = 520290 ; fi
 
-    - ./pbtheme -u test-env/Line.pbt > new-theme.cfg
-    - diff new-theme.cfg theme.cfg
+    - if [[ ! "$CROSS" ]]; then ./pbtheme -u test-env/Line.pbt > new-theme.cfg ; fi
+    - if [[ ! "$CROSS" ]]; then diff new-theme.cfg theme.cfg ; fi
     
-    - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
-    - test "`stat -c %s test-env/Line.pbt`" = 494527
+    - if [[ ! "$CROSS" ]]; then ./pbtheme -p test-env/Line.pbt empty-theme.cfg ; fi
+    - if [[ ! "$CROSS" ]]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
