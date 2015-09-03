@@ -2,6 +2,10 @@ language: clang
 
 compiler: gcc
 
+env:
+  - CROSS=
+  - CROSS=pb
+
 cache:
   directories:
     - $HOME/SDK_481
