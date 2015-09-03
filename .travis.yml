@@ -15,7 +15,7 @@ install: make
 
 before_script: touch empty-theme.cfg
 
-script: ls -al
+script: ls -l
 
 deploy:
   provider: releases
