@@ -3,8 +3,6 @@ language: c
 compiler: gcc
 
 env:
-  global: SUCCESS=false
-  matrix:
     - CROSS=
     - CROSS=pb
 
@@ -37,7 +35,6 @@ deploy:
   file: "pbtheme"
   skip_cleanup: true
   on:
-    condition:
-      - $CROSS = pb
-      - $SUCCESS = true
+    condition: $CROSS = pb
+    condition: $SUCCESS = true
     tags: true
