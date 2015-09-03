@@ -9,12 +9,11 @@ env:
   - CROSS=
   - CROSS=pb
 
-before_install: [ "$CROSS" = "pb" ] && git clone https://github.com/pocketbook-free/SDK_481.git
+before_install: [[ "$CROSS" == "pb" ]] && git clone https://github.com/pocketbook-free/SDK_481.git
 
 install: make
 
-before_script:
-    - touch empty-theme.cfg
+before_script: touch empty-theme.cfg
 
 script:
     - ./pbtheme -h
