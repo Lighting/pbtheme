@@ -3,10 +3,10 @@ language: c
 compiler: gcc
 
 env:
-  global: $SUCCESS = false
+  global: SUCCESS=false
   matrix:
-    - CROSS =
-    - CROSS = pb
+    - CROSS=
+    - CROSS=pb
 
 before_install: if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
