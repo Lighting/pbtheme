@@ -2,7 +2,13 @@ language: c
 
 compiler: gcc
 
-install: make
+cache:
+  directories:
+    - $HOME/SDK_481
+
+before_install: git clone https://github.com/pocketbook-free/SDK_481.git
+
+install: make.sh
 
 before_script:
     - touch empty-theme.cfg
