@@ -19,5 +19,6 @@ deploy:
   api_key: "ba169a1d791b2a6349d79285ab3a0d171bb04fdf"
   file: "pbtheme"
   skip_cleanup: true
-#  on:
+  on:
+    condition: $RELEASE = true
 #    tags: true
