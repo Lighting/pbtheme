@@ -12,8 +12,11 @@ install: make
 
 before_script: touch empty-theme.cfg
 
-script: ls -l
-
+script:
+    - test -z "$CROSS" && then ./pbtheme -h
+    
+    - test -z "$CROSS" && ./pbtheme test-env/Line.pbt theme.cfg
+    - test -z "$CROSS" && test "`stat -c %s theme.cfg`" = 227394
 deploy:
   provider: releases
   api_key: "ba169a1d791b2a6349d79285ab3a0d171bb04fdf"
