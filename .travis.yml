@@ -13,7 +13,7 @@ install: make
 before_script: touch empty-theme.cfg
 
 script:
-    - if [ -z "$CROSS" ]; then then ./pbtheme -h ; fi
+    - if [ -z "$CROSS" ]; then ./pbtheme -h ; fi
     
     - if [ -z "$CROSS" ]; then ./pbtheme test-env/Line.pbt theme.cfg ; fi
     - if [ -z "$CROSS" ]; then test "`stat -c %s theme.cfg`" = 227394 ; fi
