@@ -17,7 +17,7 @@ script: ls -al
 deploy:
   provider: releases
   api_key: "5ec2956a5adf8ee8cc7447c0ed7e73cce5018c74"
-  file: "pbthene"
+  file: "pbtheme"
   skip_cleanup: true
   on:
     tags: true
