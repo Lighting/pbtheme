@@ -6,7 +6,8 @@ env:
   - CROSS=
   - CROSS=pb
     before_install: git clone https://github.com/pocketbook-free/SDK_481.git
-    cache: directories: $HOME/SDK_481
+
+cache: directories: $HOME/SDK_481
 
 install: make
 
