@@ -7,25 +7,12 @@ cache:
 
 env:
   - CROSS=
+  script: echo 1
   - CROSS=pb
+  script: echo 2
 
 before_install: if [[ "$CROSS" == "pb" ]]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
 install: make
 
 before_script: touch empty-theme.cfg
-
-script:
-    - if [[ ! "$CROSS" ]]; then ./pbtheme -h ; fi
-    
-    - if [[ ! "$CROSS" ]]; then ./pbtheme test-env/Line.pbt theme.cfg ; fi
-    - if [[ ! "$CROSS" ]]; then test "`stat -c %s theme.cfg`" = 227394 ; fi
-
-    - if [[ ! "$CROSS" ]]; then ./pbtheme -p test-env/Line.pbt theme.cfg ; fi
-    - if [[ ! "$CROSS" ]]; then test "`stat -c %s test-env/Line.pbt`" = 520290 ; fi
-
-    - if [[ ! "$CROSS" ]]; then ./pbtheme -u test-env/Line.pbt > new-theme.cfg ; fi
-    - if [[ ! "$CROSS" ]]; then diff new-theme.cfg theme.cfg ; fi
-    
-    - if [[ ! "$CROSS" ]]; then ./pbtheme -p test-env/Line.pbt empty-theme.cfg ; fi
-    - if [[ ! "$CROSS" ]]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
