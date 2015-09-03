@@ -8,7 +8,7 @@ cache:
 
 before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
-install: make
+install: make pb
 
 before_script:
     - touch empty-theme.cfg
