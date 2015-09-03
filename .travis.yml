@@ -6,13 +6,13 @@ cache:
   directories: SDK_481
 
 env:
-  - CROSS=
-  script: echo 1
+#  - CROSS=
   - CROSS=pb
-  script: echo 2
 
 before_install: if [[ "$CROSS" == "pb" ]]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
 install: make
 
 before_script: touch empty-theme.cfg
+
+script: ls -al
