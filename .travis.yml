@@ -36,7 +36,7 @@ after_failure: rm -f .success
 
 deploy:
   provider: releases
-  api_key: "ba169a1d791b2a6349d79285ab3a0d171bb04fdf"
+  api_key: "24709a810af4a396fdc7388c6f2612a99309ba45"
   file: "pbtheme"
   skip_cleanup: true
   on:
