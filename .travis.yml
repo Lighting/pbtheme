@@ -32,12 +32,14 @@ script:
 
 after_success: if [ -z "$CROSS" ]; then touch .success ; fi
 
+after_failure: rm -f .success
+
 deploy:
   provider: releases
   api_key: "ba169a1d791b2a6349d79285ab3a0d171bb04fdf"
   file: "pbtheme"
   skip_cleanup: true
   on:
-    - condition: $CROSS = pb
-    - condition: [ -e .success ]
-    - tags: true
+    condition: $CROSS = pb
+    condition: [ -e .success ]
+    tags: true
