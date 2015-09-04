@@ -36,10 +36,11 @@ after_failure: rm -f .success
 
 deploy:
   provider: releases
-  api_key: "24709a810af4a396fdc7388c6f2612a99309ba45"
+  api_key: "b11c031366e49535b18696782cff6215d1b0c313"
   file: "pbtheme"
   skip_cleanup: true
   on:
+    repo: Lighting/pbtheme
     condition: $CROSS = pb
     condition: [ -e .success ]
     tags: true
