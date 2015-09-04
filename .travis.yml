@@ -2,6 +2,10 @@ language: c
 
 compiler: gcc
 
+cache:
+    - apt
+    - directories: .success
+
 env:
     - CROSS=
     - CROSS=pb
@@ -27,7 +31,7 @@ script:
     - if [ -z "$CROSS" ]; then ./pbtheme -p test-env/Line.pbt empty-theme.cfg ; fi
     - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
 
-after_success: if [ -z "$CROSS" ]; then env $SUCCESS = true ; fi
+after_success: if [ -z "$CROSS" ]; then touch .success ; fi
 
 deploy:
   provider: releases
@@ -36,5 +40,5 @@ deploy:
   skip_cleanup: true
   on:
     condition: $CROSS = pb
-    condition: $SUCCESS = true
+    condition: test -e .success
     tags: true
