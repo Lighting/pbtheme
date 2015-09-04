@@ -36,10 +36,12 @@ after_failure: rm -f .success
 
 deploy:
   provider: releases
-  api_key: "b11c031366e49535b18696782cff6215d1b0c313"
+  api_key: secure: "uhEDBNIy1iBEn5SisBAu2zAl+SedGIJBG5VlgqcuFNPexGV88Z5EGnTUamRwZ8nB5MD9RQzoHjJHbA5IHEe1dfH4r2O4BA9VpLkhFG8LbzGA44AOwfm8MYmdeXagxHFYUkGkDC2TW7jwh9iJXjmmDYw2OAhRB7ywr1YrxIhQuLeroW/UNshwHLUiZDN
+MMxW/5IT7Neu+PyAjxP8N/h+ZeRIKM9eJ8EJX6JuXYeXgAt9j4GODLW2/PTm+GNrlwpy0+/b2G85wMb8Q3i/rm96JyO1m3ronKGCD8upxbcFLAEyLmvWFLeC5axNz8QtdjK9EMLXcKhT73Hc55WzNOebiKr4/plOK2r9BxvVoPfVfWsZWVsYY7QxyKipYvq1+EyTht
+JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvAYLjRYuPP1zMfYqIKaWz+kVc3cMrJCp8SoNRohYbLvPSC6aTxGdMrqmr2fNuQt1ux41inCtJuOBleEElf9PntVuse1FWscQl3fqbWi2ILT0d+DnmZBEIyrh
+1i39OOwIDnMTdjzOkZjONj9I0Ka4lAEoto4okMMuTi2AL2NDa0ZQkVbtVxIMC7U399Kwb1647J/1CA3WaKdoaaEk9WqbeaMf5tWw="
   file: "pbtheme"
   skip_cleanup: true
   on:
-    condition: $CROSS = pb
-    condition: [ -e .success ]
+    condition: $CROSS = pb && [ -e .success ]
     tags: true
