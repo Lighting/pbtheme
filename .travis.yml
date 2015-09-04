@@ -3,12 +3,11 @@ language: c
 compiler: gcc
 
 cache:
-  directories:
-    .success
+  directories: .success
 
 env:
-  CROSS=
-  CROSS=pb
+  - CROSS=
+  - CROSS=pb
 
 before_install: if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
@@ -40,5 +39,5 @@ deploy:
   skip_cleanup: true
   on:
     condition: $CROSS = pb
-    condition: $((test -e .success))
+    condition: [ -e .success ]
     tags: true
