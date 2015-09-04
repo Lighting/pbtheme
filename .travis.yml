@@ -40,5 +40,5 @@ deploy:
   skip_cleanup: true
   on:
     condition: $CROSS = pb
-    condition: test -e .success
+    condition: `test -e .success`
     tags: true
