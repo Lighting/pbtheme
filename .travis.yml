@@ -43,5 +43,6 @@ JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvA
   file: "pbtheme"
   skip_cleanup: true
   on:
-    condition: $CROSS = pb && [ -e .success ]
+    condition: $CROSS = pb 
+    condition: -f .success
     tags: true
