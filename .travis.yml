@@ -3,7 +3,8 @@ language: c
 compiler: gcc
 
 cache:
-  directories: .success
+  directories:
+    .success
 
 env:
   CROSS=
