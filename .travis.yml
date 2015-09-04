@@ -40,7 +40,6 @@ deploy:
   file: "pbtheme"
   skip_cleanup: true
   on:
-    repo: Lighting/pbtheme
     condition: $CROSS = pb
     condition: [ -e .success ]
     tags: true
