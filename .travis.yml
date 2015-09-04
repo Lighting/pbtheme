@@ -44,5 +44,5 @@ JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvA
   skip_cleanup: true
   on:
     condition: $CROSS = pb 
-    condition: -f .success
+    condition: [ -f .success ]
     tags: true
