@@ -18,7 +18,7 @@ before_install:
   - if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
   - if [ "$CROSS" = win ]; then wget http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz ; fi
   - if [ "$CROSS" = win ]; then tar xvzf zlib-1.2.8.tar.gz ; fi
-  - if [ "$CROSS" = win ]; then make -f zlib-1.2.8/win32/Makefile.gcc BINARY_PATH=/usr/local/bin INCLUDE_PATH=/usr/local/include LIBRARY_PATH=/usr/local/lib install ; fi
+  - if [ "$CROSS" = win ]; then make -f zlib-1.2.8/Makefile BINARY_PATH=zlib-1.2.8 INCLUDE_PATH=zlib-1.2.8 LIBRARY_PATH=zlib-1.2.8 install ; fi
 
 install: make
 
