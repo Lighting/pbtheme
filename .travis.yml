@@ -4,6 +4,9 @@ compiler: gcc
 
 addons: apt: packages: mingw32
 
+cache:
+  directories: .success
+
 env:
   - CROSS=
   - CROSS=pb
@@ -44,5 +47,5 @@ JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvA
   skip_cleanup: true
   on:
     condition: $CROSS = pb 
-    condition: [ -f .success ]
+    condition: [ -e .success ]
     tags: true
