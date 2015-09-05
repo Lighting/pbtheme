@@ -140,7 +140,7 @@ void pack(char *theme, const char *config)
 		terminate("compression error");
 	
 	//edit beginning of header for new config
-	iheader = (int *) header;
+	iheader = (unsigned int *) header;
 	iheader[5] = len;
 	//calc position offset
 	delta = clen - iheader[7];
@@ -151,10 +151,10 @@ void pack(char *theme, const char *config)
 	while(hpos < (header + headersize))
 	{
 		//shift position to offset
-		iheader = ((int *) hpos);
+		iheader = (unsigned int *) hpos;
 		iheader[1] = iheader[1] + delta;
 		hpos += 12;
-		len = strlen(hpos);
+		len = (unsigned long) strlen(hpos);
 		if(len != 0)
 			hpos += ((len / 4) + 1) * 4;
 	}
