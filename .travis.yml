@@ -36,7 +36,9 @@ script:
   - if [ -z "$CROSS" ]; then ./pbtheme -p test-env/Line.pbt empty-theme.cfg ; fi
   - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
 
-after_success: if [ -z "$CROSS" ]; then echo true > .success ; else ; SUCCESS=`cat .success` ; fi
+after_success:
+  - if [ -z "$CROSS" ]; then echo true > .success ; fi
+  - if [ "$CROSS" = pb" ]; then SUCCESS = `cat .success` ; fi
 
 after_failure: rm -f .success
 
