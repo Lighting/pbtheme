@@ -154,7 +154,7 @@ void pack(char *theme, const char *config)
 		iheader = (unsigned int *) hpos;
 		iheader[1] = iheader[1] + delta;
 		hpos += 12;
-		len = (unsigned long) strlen(hpos);
+		len = static_cast<unsigned int>(strlen(hpos));
 		if(len != 0)
 			hpos += ((len / 4) + 1) * 4;
 	}
