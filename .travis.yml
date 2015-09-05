@@ -38,7 +38,7 @@ script:
 
 after_success:
   - if [ -z "$CROSS" ]; then echo success > success ; fi
-  - if [ "$CROSS" = pb" ]; then SUCCESS = `cat success` ; fi
+  - if [ "$CROSS" = pb ]; then SUCCESS = `cat success` ; fi
 
 after_failure: echo false > .success
 
