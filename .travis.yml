@@ -24,7 +24,7 @@ script:
   - test "`stat -c %s test-env/Line.pbt`" = 494527
   
   - rm pbtheme
-  - CROSS=pb
+  - export CROSS=pb
   - make
 
 deploy:
