@@ -23,9 +23,13 @@ script:
   - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
   - test "`stat -c %s test-env/Line.pbt`" = 494527
   
+  - ls -la
+  
   - rm pbtheme
   - export CROSS=pb
   - make
+
+  - ls -la
 
 deploy:
   provider: releases
