@@ -2,10 +2,10 @@ language: c
 
 compiler: gcc
 
-addons: apt: packages: mingw32
+#addons: apt: packages: mingw32
 
-cache:
-  directories: .success
+#cache:
+#  directories: .success
 
 env:
   - CROSS=
