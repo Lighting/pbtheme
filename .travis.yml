@@ -2,9 +2,6 @@ language: c
 
 compiler: gcc
 
-cache:
-  directories: .success
-
 before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
 install: make
