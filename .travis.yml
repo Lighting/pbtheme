@@ -17,8 +17,9 @@ env:
 before_install: if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
 install:
-  - ls -l /bin
-  - ls -l /usr
+  - env
+  - ls -l /usr/i586-mingw32msvc
+  - ls -l /usr/i586-mingw32msvc/bin
   - make
 
 before_script: touch empty-theme.cfg
