@@ -2,8 +2,7 @@ language: c
 
 compiler: gcc
 
-cache:
-  directories: .success
+addons: apt: packages: mingw32
 
 env:
   - CROSS=
