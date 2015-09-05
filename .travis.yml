@@ -4,7 +4,6 @@ compiler: gcc
 
 addons:
   apt:
-    sources: zlib
     packages: mingw32
 
 cache:
@@ -15,7 +14,9 @@ env:
 #  - CROSS=pb
   - CROSS=win
 
-before_install: if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
+before_install:
+  - if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
+  - if [ "$CROSS" = win ]; then wget http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz && && tar xvzf zlib-1.2.8.tar.gz ; fi
 
 install: make
 
