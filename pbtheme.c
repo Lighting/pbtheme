@@ -93,7 +93,7 @@ void pack(char *theme, const char *config)
 	FILE *ifd = stdin;
 	FILE *ofd, *tfd;
 	char buf[32], temp[L_tmpnam];
-#	unsigned char *data, *tdata, *header, *hpos;
+//	unsigned char *data, *tdata, *header, *hpos;
 	unsigned char *data, *tdata, *header;
 	unsigned long len, clen;
 	unsigned int *iheader;
