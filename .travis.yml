@@ -40,7 +40,7 @@ after_success:
   - if [ -z "$CROSS" ]; then echo true > .success ; fi
   - if [ "$CROSS" = pb" ]; then SUCCESS = `cat .success` ; fi
 
-after_failure: rm -f .success
+after_failure: echo false > .success
 
 deploy:
   provider: releases
