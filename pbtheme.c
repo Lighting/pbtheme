@@ -96,7 +96,6 @@ void pack(char *theme, const char *config)
 	unsigned char *data, *tdata, *header, *hpos;
 	unsigned long len, clen;
 	unsigned int *iheader;
-	size_t len_t;
 	int headersize, delta;
 	
 	//open theme file for reading
@@ -155,9 +154,9 @@ void pack(char *theme, const char *config)
 		iheader = (unsigned int *) hpos;
 		iheader[1] = iheader[1] + delta;
 		hpos += 12;
-		len_t = strlen(hpos);
-		if(len_t != 0)
-			hpos += (((unsigned long)len_t / 4) + 1) * 4;
+		len = strlen((char *) hpos);
+		if(len != 0)
+			hpos += ((len / 4) + 1) * 4;
 	}
 
 	//create temp file
