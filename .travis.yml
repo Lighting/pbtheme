@@ -18,7 +18,7 @@ before_install:
   - if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
   - if [ "$CROSS" = win ]; then wget http://sourceforge.net/projects/libpng/files/zlib/1.2.8/zlib-1.2.8.tar.gz ; fi
   - if [ "$CROSS" = win ]; then tar xvzf zlib-1.2.8.tar.gz ; fi
-  - if [ "$CROSS" = win ]; then make -f win32/Makefile.gcc -C zlib-1.2.8 ; fi
+  - if [ "$CROSS" = win ]; then i586-mingw32msvc-gcc zlib-1.2.8/compress.c zlib-1.2.8/uncompr.c -I zlib-1.2.8 ; fi
 
 install: make
 
