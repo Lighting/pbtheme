@@ -12,7 +12,7 @@ endif
 
 ifeq (${CROSS},win)
 MINGW=/usr/i586-mingw32msvc
-CC=i586-mingw32msvc-gcc -I$(MINGW)/include -I$(CURDIR)/zlib-1.2.8
+CC=i586-mingw32msvc-gcc -I$(MINGW)/include -I$(CURDIR)/zlib-1.2.8 -L$(CURDIR)/zlib-1.2.8
 STRIP=$(MINGW)/bin/strip
 LDFLAGS += -L$(MINGW)/lib
 EXE=.exe
