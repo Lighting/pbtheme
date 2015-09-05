@@ -12,8 +12,8 @@ endif
 
 ifeq (${CROSS},win)
 MINGW=/usr/i686-w64-mingw32
-CC=x86_64-w64-mingw32-gcc -I$(MINGW)/include
-STRIP=x86_64-w64-mingw32-strip
+CC=i686-w64-mingw32-gcc-win32 -I$(MINGW)/include
+STRIP=i586-mingw32msvc-strip
 LDFLAGS += -L$(MINGW)/lib
 EXE=.exe
 endif
