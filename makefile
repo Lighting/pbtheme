@@ -21,5 +21,5 @@ endif
 all: $(PROG)
 
 pbtheme$(EXE): $(SRC)
-	$(CC) -g -o $@ $^ $(LDFLAGS) -lzlib -lstdc++ 
+	$(CC) -g -o $@ $^ $(LDFLAGS) -lz -lstdc++ 
 	$(STRIP) $@
