@@ -2,10 +2,10 @@ language: c
 
 compiler: gcc
 
-addons: apt: packages: gcc-mingw32
+addons: apt: packages: mingw32
 
 cache:
-  apt
+  apt: true
   directories: .success
 
 env:
