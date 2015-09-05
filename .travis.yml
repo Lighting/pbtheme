@@ -37,8 +37,8 @@ script:
   - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
 
 after_success:
-  - if [ -z "$CROSS" ]; then echo true > .success ; fi
-  - if [ "$CROSS" = pb" ]; then SUCCESS = `cat .success` ; fi
+  - if [ -z "$CROSS" ]; then echo success > success ; fi
+  - if [ "$CROSS" = pb" ]; then SUCCESS = `cat success` ; fi
 
 after_failure: echo false > .success
 
@@ -53,5 +53,5 @@ JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvA
   skip_cleanup: true
   on:
     condition: $CROSS = pb 
-    condition: $SUCCESS = true
+    condition: $SUCCESS = success
     tags: true
