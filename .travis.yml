@@ -36,11 +36,9 @@ script:
   - if [ -z "$CROSS" ]; then ./pbtheme -p test-env/Line.pbt empty-theme.cfg ; fi
   - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
 
-after_success:
-  - if [ -z "$CROSS" ]; then echo success > success ; fi
-  - if [ "$CROSS" = pb ]; then SUCCESS = `cat success` ; fi
+after_success: if [ -z "$CROSS" ]; then mkdir .success ; fi
 
-after_failure: echo false > .success
+after_failure: mr -rf .success
 
 deploy:
   provider: releases
@@ -53,5 +51,5 @@ JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvA
   skip_cleanup: true
   on:
     condition: $CROSS = pb 
-    condition: $SUCCESS = success
+    condition: [ -d .success ]
     tags: true
