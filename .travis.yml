@@ -2,12 +2,16 @@ language: c
 
 compiler: gcc
 
+addons: apt: packages: gcc-mingw32
+
 cache:
+  apt
   directories: .success
 
 env:
   - CROSS=
   - CROSS=pb
+  - CROSS=win
 
 before_install: if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
