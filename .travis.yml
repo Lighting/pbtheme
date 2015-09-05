@@ -36,7 +36,7 @@ script:
   - if [ -z "$CROSS" ]; then ./pbtheme -p test-env/Line.pbt empty-theme.cfg ; fi
   - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
 
-after_success: if [ -z "$CROSS" ]; then touch .success ; fi
+after_success: if [ -z "$CROSS" ]; then echo true > .success ; else ; SUCCESS=`cat .success` ; fi
 
 after_failure: rm -f .success
 
@@ -50,5 +50,5 @@ JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvA
   skip_cleanup: true
   on:
     condition: $CROSS = pb 
-    condition: [ -e .success ]
+    condition: $SUCCESS = true
     tags: true
