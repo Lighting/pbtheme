@@ -10,13 +10,16 @@ cache:
   directories: .success
 
 env:
-  - CROSS=
-  - CROSS=pb
+#  - CROSS=
+#  - CROSS=pb
   - CROSS=win
 
 before_install: if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
 
-install: make
+install:
+  - ls -l /bin
+  - ls -l /usr
+  - make
 
 before_script: touch empty-theme.cfg
 
