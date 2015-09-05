@@ -2,43 +2,33 @@ language: c
 
 compiler: gcc
 
-addons:
-  apt:
-    packages: mingw32
-
 cache:
   directories: .success
 
-env:
-  - CROSS=
-  - CROSS=pb
-#  - CROSS=win
-
-before_install: if [ "$CROSS" = pb ]; then git clone https://github.com/pocketbook-free/SDK_481.git ; fi
-
+before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
 install: make
 
 before_script: touch empty-theme.cfg
 
 script:
-  - if [ -z "$CROSS" ]; then ./pbtheme -h ; fi
+  - ./pbtheme -h
     
-  - if [ -z "$CROSS" ]; then ./pbtheme test-env/Line.pbt theme.cfg ; fi
-  - if [ -z "$CROSS" ]; then test "`stat -c %s theme.cfg`" = 227394 ; fi
+  - ./pbtheme test-env/Line.pbt theme.cfg
+  - test "`stat -c %s theme.cfg`" = 227394
   
-  - if [ -z "$CROSS" ]; then ./pbtheme -p test-env/Line.pbt theme.cfg ; fi
-  - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 520290 ; fi
+  - ./pbtheme -p test-env/Line.pbt theme.cfg
+  - test "`stat -c %s test-env/Line.pbt`" = 520290
 
-  - if [ -z "$CROSS" ]; then ./pbtheme -u test-env/Line.pbt > new-theme.cfg ; fi
-  - if [ -z "$CROSS" ]; then diff new-theme.cfg theme.cfg ; fi
+  - ./pbtheme -u test-env/Line.pbt > new-theme.cfg
+  - diff new-theme.cfg theme.cfg
   
-  - if [ -z "$CROSS" ]; then ./pbtheme -p test-env/Line.pbt empty-theme.cfg ; fi
-  - if [ -z "$CROSS" ]; then test "`stat -c %s test-env/Line.pbt`" = 494527 ; fi
-
-after_success: if [ -z "$CROSS" ]; then mkdir .success ; fi
-
-after_failure: mr -rf .success
+  - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
+  - test "`stat -c %s test-env/Line.pbt`" = 494527
+  
+  - rm pbtheme
+  - env CROSS=pb
+  - make
 
 deploy:
   provider: releases
@@ -50,6 +40,4 @@ JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvA
   file: "pbtheme"
   skip_cleanup: true
   on:
-    condition: $CROSS = pb 
-    condition: [ -d .success ]
     tags: true
