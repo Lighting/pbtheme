@@ -5,8 +5,8 @@ compiler: gcc
 addons: apt: packages: mingw32
 
 cache:
-  - apt: true
-  - directories: .success
+  apt: true
+  directories: .success
 
 env:
   - CROSS=
