@@ -11,9 +11,10 @@ EXE=
 endif
 
 ifeq (${CROSS},win)
-CC=i686-pc-mingw32-gcc -I/usr/local/cross-tools/i386-mingw32/include
-LDFLAGS += -L/usr/local/cross-tools/i386-mingw32/lib
-STRIP=/usr/local/mingw/i586-mingw32-strip
+MINGW=/usr/i686-w64-mingw32
+CC=x86_64-w64-mingw32-gcc -I$(MINGW)/include
+STRIP=x86_64-w64-mingw32-strip
+LDFLAGS += -L$(MINGW)/lib
 EXE=.exe
 endif
 
