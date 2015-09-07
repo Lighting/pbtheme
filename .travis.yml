@@ -10,26 +10,19 @@ before_script: touch empty-theme.cfg
 
 script:
   - ./pbtheme -h
-    
   - ./pbtheme test-env/Line.pbt theme.cfg
   - test "`stat -c %s theme.cfg`" = 227394
-  
   - ./pbtheme -p test-env/Line.pbt theme.cfg
   - test "`stat -c %s test-env/Line.pbt`" = 520290
-
   - ./pbtheme -u test-env/Line.pbt > new-theme.cfg
   - diff new-theme.cfg theme.cfg
-  
   - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
   - test "`stat -c %s test-env/Line.pbt`" = 494527
-  
-  - ls -la
-  
+
+before_deploy:
   - rm pbtheme
   - export CROSS=pb
   - make
-
-  - ls -la
 
 deploy:
   provider: releases
