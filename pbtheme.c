@@ -1,5 +1,5 @@
 /*
- pbtheme - pack/unpack PocketBook theme config file
+ pbtheme - Replace/extract PocketBook theme config file
  Developed by Lit
  Based on source code by Dmitry Zakharov https://github.com/yuryfdr/xpbres.git
 */
@@ -26,19 +26,20 @@ void terminate(const char *fmt, ...)
 	exit(1);
 }
 
-void usage(char **argv)
+void usage(const char **argv)
 {
-	fprintf(stderr, "Usage: %s [OPTION] THEME [CONFIG]\n", argv[0]);
-	fprintf(stderr, "Pack/unpack CONFIG of PocketBook theme (by default, unpack)\n\n");
+	fprintf(stderr, "Usage: %s [OPTION] THEME [CONFIG] [NEW_THEME]\n", argv[0]);
+	fprintf(stderr, "Replace/extract CONFIG of PocketBook theme (by default, extract)\n\n");
 	fprintf(stderr, "Options:\n");
 	fprintf(stderr, "\t-h\tdisplay this help and exit\n");
-	fprintf(stderr, "\t-p\tpack CONFIG to THEME in-place\n");
-	fprintf(stderr, "\t-u\tunpack CONFIG from THEME\n\n");
-	fprintf(stderr, "With no CONFIG, or when CONFIG is -, read/write standard input/output.\n\n");
+	fprintf(stderr, "\t-r\treplace CONFIG in THEME into NEW_THEME\n");
+	fprintf(stderr, "\t-e\textract CONFIG from THEME\n\n");
+	fprintf(stderr, "With no CONFIG, or when CONFIG is -, read/write standard input/output.\n");
+	fprintf(stderr, "With no NEW_THEME, or when NEW_THEME is -, write to standard output.\n\n");
 	fprintf(stderr, "Report bugs to <https://github.com/Lighting/pbtheme/issues>\n");
 }
 
-void unpack(char *theme, const char *config)
+void extract(const char *theme, const char *config)
 {
 	FILE *ofd = stdout;
 	FILE *tfd;
@@ -88,11 +89,12 @@ void unpack(char *theme, const char *config)
 	free(data);
 }
 
-void pack(char *theme, const char *config)
+void replace(const char *theme, const char *config, const char *new_theme)
 {
 	FILE *ifd = stdin;
-	FILE *ofd, *tfd;
-	char buf[32], temp[L_tmpnam];
+	FILE *ofd = stdout;
+	FILE *tfd;
+	char buf[32];
 	unsigned char *data, *tdata, *header, *hpos;
 	unsigned long len, clen;
 	unsigned int *iheader;
@@ -159,14 +161,13 @@ void pack(char *theme, const char *config)
 			hpos += ((len / 4) + 1) * 4;
 	}
 
-	//create temp file
-	tmpnam(temp);
-	ofd = fopen(temp, "w+b");
+	//open output for writing
+	if(strcmp(new_theme, "-") != 0)
+		ofd = fopen(new_theme, "wb");
 	if(ofd == NULL)
-		terminate("Cannot open temporary file");
-
+		terminate("Cannot open output file %s", new_theme);
+	
 	//write new theme to temp file
-	fseek(ofd, 0, SEEK_SET);
 	fwrite(header, 1, headersize, ofd);
 	fwrite(tdata, 1, clen, ofd);
 	free(header);
@@ -180,10 +181,6 @@ void pack(char *theme, const char *config)
 	fclose(tfd);
 	fclose(ofd);
 	free(data);
-	
-	//replace theme file by temp file
-	if(remove(theme) != 0 || rename(temp, theme) != 0)
-		terminate("Error while renaming %s to %s", temp, theme);
 }
 
 int main(int argc, char **argv)
@@ -196,12 +193,12 @@ int main(int argc, char **argv)
 	
 	if(strcmp(argv[1], "-h") == 0)
 	    usage(argv);
-	else if(argc > 2 && strcmp(argv[1], "-p") == 0)
-		pack(argv[2], (argc > 3) ? argv[3] : "-");
-	else if(argc > 2 && strcmp(argv[1], "-u") == 0)
-		unpack(argv[2], (argc > 3) ? argv[3] : "-");
+	else if(argc > 2 && strcmp(argv[1], "-r") == 0)
+		replace(argv[2], (argc > 3) ? argv[3] : "-", (argc > 4) ? argv[4] : "-");
+	else if(argc > 2 && strcmp(argv[1], "-e") == 0)
+		extract(argv[2], (argc > 3) ? argv[3] : "-");
 	else
-		unpack(argv[1], (argc > 2) ? argv[2] : "-");
+		extract(argv[1], (argc > 2) ? argv[2] : "-");
 
 	return 0;
 }
