@@ -12,12 +12,12 @@ script:
   - ./pbtheme -h
   - ./pbtheme test-env/Line.pbt theme.cfg
   - test "`stat -c %s theme.cfg`" = 227394
-  - ./pbtheme -p test-env/Line.pbt theme.cfg
-  - test "`stat -c %s test-env/Line.pbt`" = 520290
-  - ./pbtheme -u test-env/Line.pbt > new-theme.cfg
+  - ./pbtheme -r test-env/Line.pbt theme.cfg new_Line.pbt
+  - test "`stat -c %s new_Line.pbt`" = 520290
+  - ./pbtheme -e new_Line.pbt > new-theme.cfg
   - diff new-theme.cfg theme.cfg
-  - ./pbtheme -p test-env/Line.pbt empty-theme.cfg
-  - test "`stat -c %s test-env/Line.pbt`" = 494527
+  - ./pbtheme -r test-env/Line.pbt empty-theme.cfg new_Line.pbt
+  - test "`stat -c %s new_Line.pbt`" = 494527
 
 before_deploy:
   - rm pbtheme
