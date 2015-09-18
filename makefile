@@ -13,10 +13,10 @@ EXE=
 endif
 
 ifeq (${CROSS},win)
-MINGW=/usr/i586-mingw32msvc
-CC=i586-mingw32msvc-gcc -I$(MINGW)/include
-STRIP=$(MINGW)/bin/strip
-LDFLAGS += -L$(MINGW)/lib
+MINGW=i586-mingw32msvc
+CC=$(MINGW)-gcc -I/usr/$(MINGW)/include
+STRIP=$(MINGW)-strip
+LDFLAGS += -L/usr/$(MINGW)/lib
 EXE=.exe
 endif
 
