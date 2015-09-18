@@ -10,10 +10,10 @@
 #include <stdarg.h>
 #include <zlib.h>
 
-#define PBTHEME_VERSION "1.2"
 #define MAXSIZE 520000
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
+
 const char *pbtheme_header = "pbtheme v1.2 (" __DATE__ " " __TIME__ ")";
 
 void terminate(const char *fmt, ...)
