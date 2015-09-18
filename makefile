@@ -19,7 +19,7 @@ CC=$(MINGW)-gcc -I/usr/$(MINGW)/include -L/usr/$(MINGW)/lib
 STRIP=$(MINGW)-strip
 LDFLAGS += -s -fomit-frame-pointer -O2
 EXE=.exe
-ZLIB=libz
+ZLIB=z
 endif
 
 all: $(PROG)
