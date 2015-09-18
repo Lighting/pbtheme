@@ -17,6 +17,7 @@ install:
   - cd ..
   - export CROSS=win
   - make
+  - ls -la
 
 before_script: touch empty-theme.cfg
 
