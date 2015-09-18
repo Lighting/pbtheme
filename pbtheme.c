@@ -28,12 +28,12 @@ void terminate(const char *fmt, ...)
 
 void usage(char **argv)
 {
-	fprintf(stderr, "Usage: %s [OPTION] THEME [CONFIG] [NEW_THEME]\n", argv[0]);
+	fprintf(stderr, "Usage: %s [option] THEME [CONFIG] [NEW_THEME]\n", argv[0]);
 	fprintf(stderr, "Replace/extract CONFIG of PocketBook theme (by default, extract)\n\n");
-	fprintf(stderr, "Options:\n");
-	fprintf(stderr, "\t-h\tdisplay this help and exit\n");
-	fprintf(stderr, "\t-r\treplace CONFIG in THEME into NEW_THEME\n");
-	fprintf(stderr, "\t-e\textract CONFIG from THEME\n\n");
+	fprintf(stderr, "Mandatory arguments to long options are mandatory for short options too.\n");
+	fprintf(stderr, "  -h, --help      display this help and exit\n");
+	fprintf(stderr, "  -r, --replace   replace CONFIG in THEME into NEW_THEME\n");
+	fprintf(stderr, "  -e, --extract   extract CONFIG from THEME\n\n");
 	fprintf(stderr, "With no CONFIG, or when CONFIG is -, read/write standard input/output.\n");
 	fprintf(stderr, "With no NEW_THEME, or when NEW_THEME is -, write to standard output.\n\n");
 	fprintf(stderr, "Report bugs to <https://github.com/Lighting/pbtheme/issues>\n");
@@ -191,11 +191,11 @@ int main(int argc, char **argv)
 		terminate("Theme file not found\nFor help, type: %s -h", argv[0]);
 	}
 	
-	if(strcmp(argv[1], "-h") == 0)
+	if(strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
 	    usage(argv);
-	else if(argc > 2 && strcmp(argv[1], "-r") == 0)
+	else if(argc > 2 && (strcmp(argv[1], "-r" || strcmp(argv[1], "--replace")) == 0)
 		replace(argv[2], (argc > 3) ? argv[3] : "-", (argc > 4) ? argv[4] : "-");
-	else if(argc > 2 && strcmp(argv[1], "-e") == 0)
+	else if(argc > 2 && (strcmp(argv[1], "-e" || strcmp(argv[1], "--extract")) == 0)
 		extract(argv[2], (argc > 3) ? argv[3] : "-");
 	else
 		extract(argv[1], (argc > 2) ? argv[2] : "-");
