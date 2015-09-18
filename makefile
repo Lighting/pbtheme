@@ -2,6 +2,7 @@ SRC=pbtheme.c
 PROG=pbtheme$(EXE)
 LDFLAGS += -fsigned-char -Wall
 STRIP=strip
+ZLIB=z
 
 ifeq (${CROSS},pb)
 TOOLCHAIN_DIR=SDK_481
@@ -18,11 +19,12 @@ CC=$(MINGW)-gcc -I/usr/$(MINGW)/include
 STRIP=$(MINGW)-strip
 LDFLAGS += -L/usr/$(MINGW)/lib
 LDFLAGS += -DNDEBUG -s -fomit-frame-pointer -O2
+ZLIB=libz
 EXE=.exe
 endif
 
 all: $(PROG)
 
 pbtheme$(EXE): $(SRC)
-	$(CC) -g -o $@ $^ $(LDFLAGS) -lz -lstdc++ 
+	$(CC) -g -o $@ $^ $(LDFLAGS) -l$(ZLIB) -lstdc++ 
 	$(STRIP) $@
