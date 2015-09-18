@@ -14,7 +14,6 @@ install:
   - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i zlib-1.2.8/win32/Makefile.gcc
   - make -f win32/Makefile.gcc -C zlib-1.2.8 BINARY_PATH=bin INCLUDE_PATH=include LIBRARY_PATH=lib install
   - export LDFLAGS="-Izlib-1.2.8/include -Lzlib-1.2.8/lib"
-  - ls -laR zlib-1.2.8/lib
   - make CROSS=win
 
 before_script: touch empty-theme.cfg
