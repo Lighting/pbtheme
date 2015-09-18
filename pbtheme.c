@@ -10,9 +10,11 @@
 #include <stdarg.h>
 #include <zlib.h>
 
+#define PBTHEME_VERSION "1.2"
 #define MAXSIZE 520000
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
+const char *pbtheme_header = "pbtheme v1.2 (" __DATE__ " " __TIME__ ")";
 
 void terminate(const char *fmt, ...)
 {
@@ -28,6 +30,7 @@ void terminate(const char *fmt, ...)
 
 void usage(char **argv)
 {
+	fprintf(stderr, "%s\n", pbtheme_header);
 	fprintf(stderr, "Usage: %s [option] THEME [CONFIG] [NEW_THEME]\n", argv[0]);
 	fprintf(stderr, "Replace/extract CONFIG of PocketBook theme (by default, extract)\n\n");
 	fprintf(stderr, "Mandatory arguments to long options are mandatory for short options too.\n");
