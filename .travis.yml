@@ -8,14 +8,7 @@ addons:
 
 #before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
-install:
-  - wget http://zlib.net/zlib-1.2.8.tar.gz
-  - tar xvfz zlib-1.2.8.tar.gz
-  - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i zlib-1.2.8/win32/Makefile.gcc
-  - make -f win32/Makefile.gcc -C zlib-1.2.8 libz.a
-  - ls -la zlib-1.2.8
-  - export LDFLAGS="-Izlib-1.2.8 -Lzlib-1.2.8"
-  - make CROSS=win
+install: make
 
 before_script: touch empty-theme.cfg
 
@@ -36,7 +29,8 @@ before_deploy:
   - wget http://zlib.net/zlib-1.2.8.tar.gz
   - tar xvfz zlib-1.2.8.tar.gz
   - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i zlib-1.2.8/win32/Makefile.gcc
-  - make -f win32/Makefile.gcc -C zlib-1.2.8
+  - make -f win32/Makefile.gcc -C zlib-1.2.8 libz.a
+  - export LDFLAGS="-Izlib-1.2.8 -Lzlib-1.2.8"
   - make CROSS=win
   - zip -9 pbtheme-${TRAVIS_BRANCH}.zip pbtheme pbtheme.exe README.md
 
