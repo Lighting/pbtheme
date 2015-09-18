@@ -1,5 +1,6 @@
 SRC=pbtheme.c
 PROG=pbtheme$(EXE)
+LDFLAGS += -fsigned-char -Wall
 STRIP=strip
 
 ifeq (${CROSS},pb)
@@ -16,6 +17,7 @@ MINGW=i586-mingw32msvc
 CC=$(MINGW)-gcc -I/usr/$(MINGW)/include -Izlib-1.2.8
 STRIP=$(MINGW)-strip
 LDFLAGS += -L/usr/$(MINGW)/lib -Lzlib-1.2.8
+LDFLAGS += -DNDEBUG -s -fsigned-char -fomit-frame-pointer -fPIC -Wall -O2
 EXE=.exe
 endif
 
