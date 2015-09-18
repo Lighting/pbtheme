@@ -19,8 +19,8 @@ CC=$(MINGW)-gcc -I/usr/$(MINGW)/include
 STRIP=$(MINGW)-strip
 LDFLAGS += -L/usr/$(MINGW)/lib
 LDFLAGS += -DNDEBUG -s -fomit-frame-pointer -O2
-ZLIB=libz
 EXE=.exe
+ZLIB=libz
 endif
 
 all: $(PROG)
