@@ -19,7 +19,7 @@ CC=$(MINGW)-gcc -I/usr/$(MINGW)/include -L/usr/$(MINGW)/lib
 STRIP=$(MINGW)-strip
 LDFLAGS += -DNDEBUG -s -fomit-frame-pointer -O2
 EXE=.exe
-ZLIB=zlib-1.2.8/libz.a
+ZLIB=/home/travis/build/Lighting/pbtheme/zlib-1.2.8/libz
 endif
 
 all: $(PROG)
