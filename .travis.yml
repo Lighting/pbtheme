@@ -10,8 +10,13 @@ env: export CROSS=win
 
 before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
-install: make
-
+install:
+  - wget http://zlib.net/zlib-1.2.8.tar.gz
+  - tar xvfz zlib-1.2.8.tar.gz
+  - cd zlib-1.2.8
+  - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i win32/Makefile.gcc
+  - make -f win32/Makefile.gcc
+  
 before_script: touch empty-theme.cfg
 
 script:
