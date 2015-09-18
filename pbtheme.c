@@ -34,9 +34,9 @@ void usage(char **argv)
 	fprintf(stderr, "Usage: %s [option] THEME [CONFIG] [NEW_THEME]\n", argv[0]);
 	fprintf(stderr, "Replace/extract CONFIG of PocketBook theme (by default, extract)\n\n");
 	fprintf(stderr, "Mandatory arguments to long options are mandatory for short options too.\n");
-	fprintf(stderr, "  -h, --help      display this help and exit\n");
-	fprintf(stderr, "  -r, --replace   replace CONFIG in THEME into NEW_THEME\n");
-	fprintf(stderr, "  -e, --extract   extract CONFIG from THEME\n\n");
+	fprintf(stderr, "  -h,  --help      display this help and exit\n");
+	fprintf(stderr, "  -r,  --replace   replace CONFIG in THEME into NEW_THEME\n");
+	fprintf(stderr, "  -e,  --extract   extract CONFIG from THEME\n\n");
 	fprintf(stderr, "With no CONFIG, or when CONFIG is -, read/write standard input/output.\n");
 	fprintf(stderr, "With no NEW_THEME, or when NEW_THEME is -, write to standard output.\n\n");
 	fprintf(stderr, "Report bugs to <https://github.com/Lighting/pbtheme/issues>\n");
