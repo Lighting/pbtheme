@@ -14,9 +14,9 @@ endif
 
 ifeq (${CROSS},win)
 MINGW=i586-mingw32msvc
-CC=$(MINGW)-gcc -I/usr/$(MINGW)/include
+CC=$(MINGW)-gcc -I/usr/$(MINGW)/include -Izlib-1.2.8
 STRIP=$(MINGW)-strip
-LDFLAGS += -L/usr/$(MINGW)/lib
+LDFLAGS += -L/usr/$(MINGW)/lib -Lzlib-1.2.8
 EXE=.exe
 endif
 
