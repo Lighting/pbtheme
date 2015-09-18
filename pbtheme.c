@@ -193,9 +193,9 @@ int main(int argc, char **argv)
 	
 	if(strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
 	    usage(argv);
-	else if(argc > 2 && (strcmp(argv[1], "-r" || strcmp(argv[1], "--replace")) == 0)
+	else if(argc > 2 && (strcmp(argv[1], "-r" == 0 || strcmp(argv[1], "--replace")) == 0)
 		replace(argv[2], (argc > 3) ? argv[3] : "-", (argc > 4) ? argv[4] : "-");
-	else if(argc > 2 && (strcmp(argv[1], "-e" || strcmp(argv[1], "--extract")) == 0)
+	else if(argc > 2 && (strcmp(argv[1], "-e" == 0 || strcmp(argv[1], "--extract")) == 0)
 		extract(argv[2], (argc > 3) ? argv[3] : "-");
 	else
 		extract(argv[1], (argc > 2) ? argv[2] : "-");
