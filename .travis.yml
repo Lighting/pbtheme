@@ -14,13 +14,17 @@ before_script: touch empty-theme.cfg
 
 script:
   - ./pbtheme -h
+  - ./pbtheme --help
   - ./pbtheme test-env/Line.pbt theme.cfg
   - test "`stat -c %s theme.cfg`" = 227394
   - ./pbtheme -r test-env/Line.pbt theme.cfg new_Line.pbt
   - test "`stat -c %s new_Line.pbt`" = 520290
   - ./pbtheme -e new_Line.pbt > new-theme.cfg
   - diff new-theme.cfg theme.cfg
-  - ./pbtheme -r test-env/Line.pbt empty-theme.cfg new_Line.pbt
+  - > new-theme.cfg
+  - ./pbtheme --extract new_Line.pbt > new-theme.cfg
+  - diff new-theme.cfg theme.cfg
+  - ./pbtheme --replace test-env/Line.pbt empty-theme.cfg new_Line.pbt
   - test "`stat -c %s new_Line.pbt`" = 494527
 
 before_deploy:
