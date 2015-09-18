@@ -12,9 +12,9 @@ install:
   - wget http://zlib.net/zlib-1.2.8.tar.gz
   - tar xvfz zlib-1.2.8.tar.gz
   - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i zlib-1.2.8/win32/Makefile.gcc
-  - make -f win32/Makefile.gcc -C zlib-1.2.8 BINARY_PATH=~/zlib/bin INCLUDE_PATH=~/zlib/include LIBRARY_PATH=~/zlib/lib install
+  - make -f win32/Makefile.gcc -C zlib-1.2.8 BINARY_PATH=../zlib/bin INCLUDE_PATH=../zlib/include LIBRARY_PATH=../zlib/lib install
   - ls -laR ~/zlib/lib
-  - make CROSS=win LDFLAGS+=-I~/zlib/include -l~/zlib/lib
+  - make CROSS=win LDFLAGS+=-Izlib/include -lzlib/lib
 
 before_script: touch empty-theme.cfg
 
