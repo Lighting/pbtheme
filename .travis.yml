@@ -6,8 +6,6 @@ addons:
   apt:
     packages: mingw32
 
-env: export CROSS=win
-
 before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
 install:
@@ -16,7 +14,10 @@ install:
   - cd zlib-1.2.8
   - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i win32/Makefile.gcc
   - make -f win32/Makefile.gcc
-  
+  - cd ..
+  - export CROSS=win
+  - make
+
 before_script: touch empty-theme.cfg
 
 script:
