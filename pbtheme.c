@@ -26,7 +26,7 @@ void terminate(const char *fmt, ...)
 	exit(1);
 }
 
-void usage(const char **argv)
+void usage(char **argv)
 {
 	fprintf(stderr, "Usage: %s [OPTION] THEME [CONFIG] [NEW_THEME]\n", argv[0]);
 	fprintf(stderr, "Replace/extract CONFIG of PocketBook theme (by default, extract)\n\n");
