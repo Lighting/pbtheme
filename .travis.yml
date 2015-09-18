@@ -14,6 +14,7 @@ install:
   - cd zlib-1.2.8
   - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i win32/Makefile.gcc
   - make -f win32/Makefile.gcc
+  - ls -laR
   - cd ..
   - export CROSS=win
   - make
