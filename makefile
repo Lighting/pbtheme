@@ -9,7 +9,6 @@ LDFLAGS += -mcpu=cortex-a8 -march=armv7-a -mfpu=neon -mfloat-abi=softfp
 LDFLAGS += -DNDEBUG -s -fsigned-char -fomit-frame-pointer -fPIC -Wall -O2 -Wno-format-y2k
 LDFLAGS += -L$(TOOLCHAIN_DIR)/arm-obreey-linux-gnueabi/sysroot/usr/lib
 STRIP=$(TOOLCHAIN_DIR)/bin/arm-obreey-linux-gnueabi-strip
-EXE=
 endif
 
 ifeq (${CROSS},win)
