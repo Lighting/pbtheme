@@ -6,10 +6,9 @@ addons:
   apt:
     packages: mingw32
 
-#before_install: git clone https://github.com/pocketbook-free/SDK_481.git
+before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
-install: 
-  - env
+install: make
 
 before_script: touch empty-theme.cfg
 
@@ -36,7 +35,7 @@ before_deploy:
   - cd ..
   - export CROSS=win
   - make
-  - zip -9 pbtheme.zip pbtheme pbtheme.exe README.md
+  - zip -9 pbtheme-${TRAVIS_BRANCH}.zip pbtheme pbtheme.exe README.md
 
 deploy:
   provider: releases
@@ -45,7 +44,7 @@ deploy:
 MMxW/5IT7Neu+PyAjxP8N/h+ZeRIKM9eJ8EJX6JuXYeXgAt9j4GODLW2/PTm+GNrlwpy0+/b2G85wMb8Q3i/rm96JyO1m3ronKGCD8upxbcFLAEyLmvWFLeC5axNz8QtdjK9EMLXcKhT73Hc55WzNOebiKr4/plOK2r9BxvVoPfVfWsZWVsYY7QxyKipYvq1+EyTht
 JeUeJHo2uBf2roV+oKkVnVWkDOJYKP8gfT5knBrcEEmnIoZnKW8DukJ7xlVY6YBdF962TPOkSfqIJTvAYLjRYuPP1zMfYqIKaWz+kVc3cMrJCp8SoNRohYbLvPSC6aTxGdMrqmr2fNuQt1ux41inCtJuOBleEElf9PntVuse1FWscQl3fqbWi2ILT0d+DnmZBEIyrh
 1i39OOwIDnMTdjzOkZjONj9I0Ka4lAEoto4okMMuTi2AL2NDa0ZQkVbtVxIMC7U399Kwb1647J/1CA3WaKdoaaEk9WqbeaMf5tWw="
-  file: "pbtheme.zip"
+  file: "pbtheme-${TRAVIS_BRANCH}.zip"
   skip_cleanup: true
   on:
     tags: true
