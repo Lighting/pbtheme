@@ -24,7 +24,7 @@ void terminate(const char *fmt, ...)
 	va_start(ap, fmt);
 	vfprintf(stderr, fmt, ap);
 	va_end(ap);
-	fprintf(stderr, "\n\n");
+	fprintf(stderr, "\n");
 	exit(1);
 }
 
@@ -191,7 +191,7 @@ int main(int argc, char **argv)
 	if(argc < 2)
 	{
 		usage(argv);
-		terminate("Theme file not found\nFor help, type: %s -h", argv[0]);
+		terminate("\nTheme file not found");
 	}
 	
 	if(strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
