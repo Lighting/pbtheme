@@ -21,7 +21,7 @@ script:
   - test "`stat -c %s new_Line.pbt`" = 520290
   - ./pbtheme -e new_Line.pbt > new-theme.cfg
   - diff new-theme.cfg theme.cfg
-  - /dev/null > new-theme.cfg
+  - new-theme.cfg < /dev/null
   - ./pbtheme --extract new_Line.pbt > new-theme.cfg
   - diff new-theme.cfg theme.cfg
   - ./pbtheme --replace test-env/Line.pbt empty-theme.cfg new_Line.pbt
