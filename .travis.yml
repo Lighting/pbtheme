@@ -8,17 +8,7 @@ addons:
 
 before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
-install:
-  - wget http://zlib.net/zlib-1.2.8.tar.gz
-  - tar xvfz zlib-1.2.8.tar.gz
-  - cd zlib-1.2.8
-  - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i win32/Makefile.gcc
-  - make -f win32/Makefile.gcc
-  - ls -laR
-  - cd ..
-  - export CROSS=win
-  - make
-  - ls -la
+install: make
 
 before_script: touch empty-theme.cfg
 
@@ -36,6 +26,14 @@ script:
 before_deploy:
   - rm pbtheme
   - export CROSS=pb
+  - make
+  - wget http://zlib.net/zlib-1.2.8.tar.gz
+  - tar xvfz zlib-1.2.8.tar.gz
+  - cd zlib-1.2.8
+  - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i win32/Makefile.gcc
+  - make -f win32/Makefile.gcc
+  - cd ..
+  - export CROSS=win
   - make
 
 deploy:
