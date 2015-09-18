@@ -6,7 +6,7 @@ addons:
   apt:
     packages: mingw32
 
-before_install: git clone https://github.com/pocketbook-free/SDK_481.git
+#before_install: git clone https://github.com/pocketbook-free/SDK_481.git
 
 install:
   - wget http://zlib.net/zlib-1.2.8.tar.gz
