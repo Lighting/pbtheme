@@ -30,8 +30,7 @@ before_deploy:
   - tar xvfz zlib-1.2.8.tar.gz
   - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i zlib-1.2.8/win32/Makefile.gcc
   - make -f win32/Makefile.gcc -C zlib-1.2.8 libz.a
-  - export LDFLAGS="-Izlib-1.2.8 -Lzlib-1.2.8"
-  - make CROSS=win
+  - make CROSS=win LDFLAGS="-Izlib-1.2.8 -Lzlib-1.2.8"
   - zip -9 pbtheme-${TRAVIS_BRANCH}.zip pbtheme pbtheme.exe README.md
 
 deploy:
