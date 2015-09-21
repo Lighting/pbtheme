@@ -9,5 +9,5 @@ SDK для сборки под PocketBook: https://github.com/pocketbook-free/SD
 
 [travis-badge]:https://travis-ci.org/Lighting/pbtheme.svg?branch=master
 [travis-link]:https://travis-ci.org/Lighting/pbtheme
-[release-badge]:https://img.shields.io/github/release/Lighting/pbtheme.svg
+[release-badge]:https://badge.fury.io/gh/Lighting%2Fpbtheme.svg
 [release-link]:https://github.com/Lighting/pbtheme/releases/latest
