@@ -1,7 +1,7 @@
 /*
  pbtheme - Replace/extract PocketBook theme config file
- Developed by Lit
- Based on source code by Dmitry Zakharov https://github.com/yuryfdr/xpbres.git
+ Developed by Lit (https://github.com/Lighting/pbtheme)
+ Based on source code by Dmitry Zakharov https://github.com/yuryfdr/xpbres
 */
 
 #include <stdio.h>
@@ -14,7 +14,7 @@
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
 
-const char *pbtheme_header = "pbtheme v1.2 (" __DATE__ " " __TIME__ ")";
+const char *pbtheme_header = "pbtheme v2.1 (" __DATE__ " " __TIME__ ")";
 
 void terminate(const char *fmt, ...)
 {
