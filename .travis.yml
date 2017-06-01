@@ -16,9 +16,9 @@ script:
   - ./pbtheme -h
   - ./pbtheme --help
   - ./pbtheme test-env/Line.pbt theme.cfg
-  - test "`stat -c %s theme.cfg`" = 227394
+  - test "`stat -c %s theme.cfg`" = 610347
   - ./pbtheme -r test-env/Line.pbt theme.cfg new_Line.pbt
-  - test "`stat -c %s new_Line.pbt`" = 520290
+  - test "`stat -c %s new_Line.pbt`" = 599195
   - ./pbtheme -e new_Line.pbt > new-theme.cfg
   - diff new-theme.cfg theme.cfg
   - echo 1 >> new-theme.cfg
