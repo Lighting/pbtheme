@@ -1,5 +1,6 @@
 /*
  pbtheme - Replace/extract PocketBook theme config file
+ Version 2.2
  Developed by Lit (https://github.com/Lighting/pbtheme)
  Based on source code by Dmitry Zakharov https://github.com/yuryfdr/xpbres
 */
@@ -10,11 +11,11 @@
 #include <stdarg.h>
 #include <zlib.h>
 
-#define MAXSIZE 520000
+#define MAXSIZE 1024*1024
 #define PBTSIGNATURE "PocketBookTheme"
 #define PBTVERSION 1
 
-const char *pbtheme_header = "pbtheme v2.1 (" __DATE__ " " __TIME__ ")";
+const char *pbtheme_header = "pbtheme v2.2 (" __DATE__ " " __TIME__ ")";
 
 void terminate(const char *fmt, ...)
 {
