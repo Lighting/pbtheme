@@ -26,7 +26,7 @@ script:
   - ./pbtheme --extract new_Line.pbt > new-theme.cfg
   - diff new-theme.cfg theme.cfg
   - ./pbtheme --replace test-env/Line.pbt empty-theme.cfg new_Line.pbt
-  - test "`stat -c %s new_Line.pbt`" = 494527
+  - test "`stat -c %s new_Line.pbt`" = 546757
 
 before_deploy:
   - rm pbtheme
