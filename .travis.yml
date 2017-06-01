@@ -31,11 +31,11 @@ script:
 before_deploy:
   - rm pbtheme
   - make CROSS=pb
-  - wget http://zlib.net/zlib-1.2.8.tar.gz
-  - tar xvfz zlib-1.2.8.tar.gz
-  - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i zlib-1.2.8/win32/Makefile.gcc
-  - make -f win32/Makefile.gcc -C zlib-1.2.8 libz.a
-  - make CROSS=win LDFLAGS="-Izlib-1.2.8 -Lzlib-1.2.8"
+  - wget http://zlib.net/zlib-1.2.11.tar.gz
+  - tar xvfz zlib-1.2.11.tar.gz
+  - sed -e s/"PREFIX ="/"PREFIX = i586-mingw32msvc-"/ -i zlib-1.2.11/win32/Makefile.gcc
+  - make -f win32/Makefile.gcc -C zlib-1.2.11 libz.a
+  - make CROSS=win LDFLAGS="-Izlib-1.2.11 -Lzlib-1.2.11"
   - zip -9 pbtheme-${TRAVIS_BRANCH}-win.zip pbtheme.exe README.md
   - zip -9 pbtheme-${TRAVIS_BRANCH}-pb.zip pbtheme README.md
 
