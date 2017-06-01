@@ -195,7 +195,7 @@ int main(int argc, char **argv)
 		terminate("\nTheme file not found");
 	}
 	
-	if(strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
+	if(strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "/?") == 0)
 	    usage(argv);
 	else if(argc > 2 && (strcmp(argv[1], "-r") == 0 || strcmp(argv[1], "--replace") == 0))
 		replace(argv[2], (argc > 3) ? argv[3] : "-", (argc > 4) ? argv[4] : "-");
