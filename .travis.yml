@@ -13,6 +13,7 @@ install: make
 before_script: touch empty-theme.cfg
 
 script:
+  - ./pbtheme /?
   - ./pbtheme -h
   - ./pbtheme --help
   - ./pbtheme test-env/Line.pbt theme.cfg
